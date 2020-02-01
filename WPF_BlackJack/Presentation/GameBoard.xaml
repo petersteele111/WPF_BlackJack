@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_BlackJack"
         mc:Ignorable="d"
-        Title="BlackJack" Height="800" Width="800"
+        Title="BlackJack" Height="820" Width="800"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid Background="DarkSlateGray">
@@ -28,7 +28,10 @@
                 <Image Source="Images/Cards/c01.bmp" Canvas.Left="380" Canvas.Top="311" Width="85"></Image>
             </Canvas>
             <Canvas>
-                <Image Source="Images/Chips/1Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="15" Canvas.Top="600"></Image>
+                <Button Width="75" Canvas.Left="15" Canvas.Top="600" Background="Transparent" BorderThickness="0">
+                    <Image Source="Images/Chips/1Chip.png"></Image>
+                </Button>
+                
                 <Image Source="Images/Chips/5Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="100" Canvas.Top="600"></Image>
                 <Image Source="Images/Chips/10Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="185" Canvas.Top="600"></Image>
                 <Image Source="Images/Chips/25Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="15" Canvas.Top="685"></Image>
