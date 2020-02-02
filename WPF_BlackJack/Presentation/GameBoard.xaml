@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_BlackJack"
         mc:Ignorable="d"
-        Title="BlackJack" Height="820" Width="800"
-        WindowStartupLocation="CenterScreen">
+        Title="BlackJack" Height="820" Width="810"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
         <Grid Background="DarkSlateGray">
             <Grid.ColumnDefinitions>
@@ -28,22 +29,24 @@
                 <Image Source="Images/Cards/c01.bmp" Canvas.Left="380" Canvas.Top="311" Width="85"></Image>
             </Canvas>
             <Canvas>
-                <Button Width="75" Canvas.Left="15" Canvas.Top="600" Background="Transparent" BorderThickness="0">
+                <Button Width="75" Canvas.Left="15" Canvas.Top="335" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/1Chip.png"></Image>
                 </Button>
-                <Button Width="75" Canvas.Left="100" Canvas.Top="600" Background="Transparent" BorderThickness="0">
+                <Button Width="75" Canvas.Left="95" Canvas.Top="385" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/5Chip.png"></Image>
                 </Button>
-                <Button Width="75 " Canvas.Left="185" Canvas.Top="600" Background="Transparent" BorderThickness="0">
+                <Button Width="75 " Canvas.Left="185" Canvas.Top="420" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/10Chip.png"></Image>
                 </Button>
-                <Button Width="75 " Canvas.Left="15" Canvas.Top="685" Background="Transparent" BorderThickness="0">
+
+
+                <Button Width="75 " Canvas.Left="550" Canvas.Top="420" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/25Chip.png"></Image>
                 </Button>
-                <Button  Width="75 " Canvas.Left="100" Canvas.Top="685" Background="Transparent" BorderThickness="0">
+                <Button  Width="75 " Canvas.Left="635" Canvas.Top="390" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/50Chip.png"></Image>
                 </Button>
-                <Button  Width="75 " Canvas.Left="185" Canvas.Top="685" Background="Transparent" BorderThickness="0">
+                <Button  Width="75 " Canvas.Left="715" Canvas.Top="345" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/100Chip.png"></Image>
                 </Button>
                 <Label Content="Bets" Canvas.Left="100" Canvas.Top="530" Foreground="White" FontSize="36"></Label>
@@ -51,7 +54,7 @@
             <Canvas>
                 <Label Content="Actions" Foreground="White" FontSize="36" Canvas.Left="350" Canvas.Top="530"></Label>
                 <StackPanel Canvas.Left="325" Canvas.Top="595" Orientation="Vertical">
-                    
+
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Hit" FontSize="24" Width="80" Height="80" Margin="5"></Button>
                         <Button Content="Stand" FontSize="24" Width="80" Height="80"></Button>
@@ -60,7 +63,14 @@
                         <Button Content="Split" FontSize="24" Width="80" Height="80" Margin="5"></Button>
                         <Button Content="Deal" FontSize="24" Width="80" Height="80"></Button>
                     </StackPanel>
-                    
+                </StackPanel>
+            </Canvas>
+            <Canvas>
+                <StackPanel Orientation="Vertical" Canvas.Left="550" Canvas.Top="600">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Winnings" FontSize="24" Foreground="LawnGreen" FontWeight="Bold"></Label>
+                        <TextBlock></TextBlock>
+                    </StackPanel>
                 </StackPanel>
             </Canvas>
         </Grid>
