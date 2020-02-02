@@ -31,17 +31,26 @@
                 <Button Width="75" Canvas.Left="15" Canvas.Top="600" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/1Chip.png"></Image>
                 </Button>
-                
-                <Image Source="Images/Chips/5Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="100" Canvas.Top="600"></Image>
-                <Image Source="Images/Chips/10Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="185" Canvas.Top="600"></Image>
-                <Image Source="Images/Chips/25Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="15" Canvas.Top="685"></Image>
-                <Image Source="Images/Chips/50Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="100" Canvas.Top="685"></Image>
-                <Image Source="Images/Chips/100Chip.png" Grid.Column="0" Grid.Row="1" Width="75   " Canvas.Left="185" Canvas.Top="685"></Image>
+                <Button Width="75" Canvas.Left="100" Canvas.Top="600" Background="Transparent" BorderThickness="0">
+                    <Image Source="Images/Chips/5Chip.png"></Image>
+                </Button>
+                <Button Width="75 " Canvas.Left="185" Canvas.Top="600" Background="Transparent" BorderThickness="0">
+                    <Image Source="Images/Chips/10Chip.png"></Image>
+                </Button>
+                <Button Width="75 " Canvas.Left="15" Canvas.Top="685" Background="Transparent" BorderThickness="0">
+                    <Image Source="Images/Chips/25Chip.png"></Image>
+                </Button>
+                <Button  Width="75 " Canvas.Left="100" Canvas.Top="685" Background="Transparent" BorderThickness="0">
+                    <Image Source="Images/Chips/50Chip.png"></Image>
+                </Button>
+                <Button  Width="75 " Canvas.Left="185" Canvas.Top="685" Background="Transparent" BorderThickness="0">
+                    <Image Source="Images/Chips/100Chip.png"></Image>
+                </Button>
                 <Label Content="Bets" Canvas.Left="100" Canvas.Top="530" Foreground="White" FontSize="36"></Label>
             </Canvas>
             <Canvas>
                 <Label Content="Actions" Foreground="White" FontSize="36" Canvas.Left="350" Canvas.Top="530"></Label>
-                <StackPanel Canvas.Left="325" Canvas.Top="585" Orientation="Vertical">
+                <StackPanel Canvas.Left="325" Canvas.Top="595" Orientation="Vertical">
                     
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Hit" FontSize="24" Width="80" Height="80" Margin="5"></Button>
