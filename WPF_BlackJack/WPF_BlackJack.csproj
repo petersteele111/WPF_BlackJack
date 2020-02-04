@@ -63,6 +63,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Dealer.cs" />
+    <Compile Include="Models\ObservableObject.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\DealerViewModel.cs" />
+    <Compile Include="Models\PlayerViewModel.cs" />
     <Compile Include="Presentation\GameBoard.xaml.cs">
       <DependentUpon>GameBoard.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -98,7 +103,6 @@
     <Folder Include="Business\" />
     <Folder Include="Data\" />
     <Folder Include="Developer Notes\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Presentation\Images\GameBoard\BlackJackTable.png" />

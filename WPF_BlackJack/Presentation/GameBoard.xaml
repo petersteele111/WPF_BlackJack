@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_BlackJack"
         mc:Ignorable="d"
-        Title="BlackJack" Height="820" Width="810"
+        Title="BlackJack" Height="1000" Width="1000"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        DataContext="{Binding GameBoard, Source={StaticResource Locator}}">
     <Grid>
         <Grid Background="DarkSlateGray">
             <Grid.ColumnDefinitions>
@@ -17,43 +18,127 @@
                 <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Source="Images/GameBoard/BlackJackTable.png" Stretch="Fill" Grid.Column="0" Grid.Row="0" Height="577" VerticalAlignment="Top"/>
+            <Image Source="Images/GameBoard/BlackJackTable.png" Stretch="Fill" Grid.Column="0" Grid.Row="0"/>
+            
+            <!-- Canvas Layout for GameBoard-->
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Player Name -->
+                <Label Grid.Column="0" Grid.Row="0" Content="Player:" FontSize="28" Foreground="White"></Label>
+                <TextBlock DataContext="{Binding Player}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Text="{Binding Player.Name}" FontSize="28" Foreground="White" Padding="5"></TextBlock>
+
+                <!-- Dealer Name -->
+                <Label Grid.Column="0" Grid.Row="1" Content="Dealer:" FontSize="28" Foreground="White"></Label>
+                <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Text="{Binding Dealer.Name}" FontSize="28" Foreground="White" Padding="5"></TextBlock>
+
+                <!-- Dealer Count -->
+                <TextBlock Grid.Column="5" Grid.Row="0"  Text="{Binding Dealer.CardTotal}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="24" Foreground="White"></TextBlock>
+
+                <!-- Player Count -->
+                <TextBlock Grid.Column="5" Grid.Row="4"  Text="{Binding Player.CardTotal}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="24" Foreground="White"></TextBlock>
+            </Grid>
+
+            <!-- Dealer Cards -->
             <Canvas Grid.Column="0" Grid.Row="0">
-                <Image Source="Images/Cards/c01.bmp" Canvas.Left="340" Canvas.Top="19" Width="85"></Image>
-                <Image Source="Images/Cards/c01.bmp" Canvas.Left="360" Canvas.Top="19" Width="85"></Image>
-                <Image Source="Images/Cards/c01.bmp" Canvas.Left="380" Canvas.Top="19" Width="85"></Image>
+                <Image Source="Images/Cards/c01.bmp" Canvas.Left="430" Canvas.Top="21" Width="115"></Image>
+                <Image Source="Images/Cards/c01.bmp" Canvas.Left="460" Canvas.Top="21" Width="115"></Image>
+                <Image Source="Images/Cards/c01.bmp" Canvas.Left="490" Canvas.Top="21" Width="115"></Image>
             </Canvas>
+
+            <!-- Player Cards -->
             <Canvas Grid.Column="0" Grid.Row="0">
-                <Image Source="Images/Cards/c01.bmp" Canvas.Left="340" Canvas.Top="311" Width="85"></Image>
-                <Image Source="Images/Cards/c01.bmp" Canvas.Left="360" Canvas.Top="311" Width="85"></Image>
-                <Image Source="Images/Cards/c01.bmp" Canvas.Left="380" Canvas.Top="311" Width="85"></Image>
+                <Image Source="Images/Cards/c01.bmp" Canvas.Left="430" Canvas.Top="385" Width="115"></Image>
+                <Image Source="Images/Cards/c01.bmp" Canvas.Left="460" Canvas.Top="385" Width="115"></Image>
+                <Image Source="Images/Cards/c01.bmp" Canvas.Left="490" Canvas.Top="385" Width="115"></Image>
             </Canvas>
+            
+            <!-- Bet Chips -->
             <Canvas>
-                <Button Width="75" Canvas.Left="15" Canvas.Top="335" Background="Transparent" BorderThickness="0">
+
+                <Button Width="100" Canvas.Left="50" Canvas.Top="440" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/1Chip.png"></Image>
                 </Button>
-                <Button Width="75" Canvas.Left="95" Canvas.Top="385" Background="Transparent" BorderThickness="0">
+                <Button Width="100" Canvas.Left="160" Canvas.Top="500" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/5Chip.png"></Image>
                 </Button>
-                <Button Width="75 " Canvas.Left="185" Canvas.Top="420" Background="Transparent" BorderThickness="0">
+                <Button Width="100" Canvas.Left="280" Canvas.Top="540" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/10Chip.png"></Image>
                 </Button>
 
 
-                <Button Width="75 " Canvas.Left="550" Canvas.Top="420" Background="Transparent" BorderThickness="0">
+                <Button Width="100" Canvas.Left="620" Canvas.Top="540" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/25Chip.png"></Image>
                 </Button>
-                <Button  Width="75 " Canvas.Left="635" Canvas.Top="390" Background="Transparent" BorderThickness="0">
+                <Button  Width="100" Canvas.Left="735" Canvas.Top="500" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/50Chip.png"></Image>
                 </Button>
-                <Button  Width="75 " Canvas.Left="715" Canvas.Top="345" Background="Transparent" BorderThickness="0">
+                <Button  Width="100" Canvas.Left="840" Canvas.Top="450" Background="Transparent" BorderThickness="0">
                     <Image Source="Images/Chips/100Chip.png"></Image>
                 </Button>
-                <Label Content="Bets" Canvas.Left="100" Canvas.Top="530" Foreground="White" FontSize="36"></Label>
+
             </Canvas>
+
+
+
+            <!-- User Interface -->
+            <Grid Grid.Column="0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!-- Total Bet -->
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30, 0, 0, 0">
+                    <Label Content="Total Bet:" Foreground="Red" FontSize="24" FontWeight="Bold"></Label>
+                    <TextBlock Text="{Binding Player.TotalBet, StringFormat={}{0:c2}, FallbackValue=$0.00}" Foreground="White" FontSize="24" Padding="5" Margin="7, 0, 0, 0"></TextBlock>
+                </StackPanel>
+
+                <!-- Total Win -->
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30, 0, 0, 0">
+                    <Label Content="Total Win:" Foreground="LawnGreen" FontSize="24" FontWeight="Bold"></Label>
+                    <TextBlock Text="{Binding Player.TotalWin, StringFormat={}{0:c2}, FallbackValue=$0.00}" Foreground="White" FontSize="24" Padding="5"></TextBlock>
+                </StackPanel>
+     
+                <!-- BankRoll -->
+                <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Bankroll:" Foreground="LawnGreen" FontSize="24" FontWeight="Bold"></Label>
+                    <TextBlock Margin="5" Name="Winnings" Text="{Binding Player.BankRoll, StringFormat={}{0:c2}}" FontSize="24" Foreground="White"></TextBlock>
+                </StackPanel>
+            </Grid>
+
+
+
+
             <Canvas>
-                <Label Content="Actions" Foreground="White" FontSize="36" Canvas.Left="350" Canvas.Top="530"></Label>
-                <StackPanel Canvas.Left="325" Canvas.Top="595" Orientation="Vertical">
+                <Label Content="Actions" Foreground="White" FontSize="36" Canvas.Left="440" Canvas.Top="660"></Label>
+                <StackPanel Canvas.Left="420" Canvas.Top="730" Orientation="Vertical">
 
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Hit" FontSize="24" Width="80" Height="80" Margin="5"></Button>
@@ -62,14 +147,6 @@
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Split" FontSize="24" Width="80" Height="80" Margin="5"></Button>
                         <Button Content="Deal" FontSize="24" Width="80" Height="80"></Button>
-                    </StackPanel>
-                </StackPanel>
-            </Canvas>
-            <Canvas>
-                <StackPanel Orientation="Vertical" Canvas.Left="550" Canvas.Top="600">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Winnings" FontSize="24" Foreground="LawnGreen" FontWeight="Bold"></Label>
-                        <TextBlock></TextBlock>
                     </StackPanel>
                 </StackPanel>
             </Canvas>
