@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPF_BlackJack.Business
+namespace WPF_BlackJack.Presentation
 {
     public class ObservableObject : INotifyPropertyChanged
     {

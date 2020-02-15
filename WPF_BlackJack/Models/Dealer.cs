@@ -1,4 +1,5 @@
-﻿namespace WPF_BlackJack.Business
+﻿using WPF_BlackJack.Presentation;
+namespace WPF_BlackJack.Models
 {
     class Dealer : ObservableObject
     {
@@ -14,9 +15,9 @@
             }
         }
 
-        private int _cardTotal;
+        private int? _cardTotal;
 
-        public int CardTotal
+        public int? CardTotal
         {
             get => _cardTotal;
             set

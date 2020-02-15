@@ -1,14 +1,17 @@
-﻿<Window x:Class="WPF_BlackJack.MainWindow"
+﻿<Window x:Class="WPF_BlackJack.GameView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_BlackJack"
+        xmlns:presentation="clr-namespace:WPF_BlackJack.Presentation"
         mc:Ignorable="d"
         Title="BlackJack" Height="1000" Width="1000"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        DataContext="{Binding GameBoard, Source={StaticResource Locator}}">
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <presentation:GameViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid Background="DarkSlateGray">
             <Grid.ColumnDefinitions>
@@ -45,7 +48,7 @@
 
                 <!-- Player Name -->
                 <Label Grid.Column="0" Grid.Row="0" Content="Player:" FontSize="28" Foreground="White"></Label>
-                <TextBlock DataContext="{Binding Player}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Text="{Binding Player.Name}" FontSize="28" Foreground="White" Padding="5"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Text="{Binding Player.Name}" FontSize="28" Foreground="White" Padding="5"></TextBlock>
 
                 <!-- Dealer Name -->
                 <Label Grid.Column="0" Grid.Row="1" Content="Dealer:" FontSize="28" Foreground="White"></Label>
@@ -123,7 +126,7 @@
                 <!-- Total Win -->
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30, 0, 0, 0">
                     <Label Content="Total Win:" Foreground="LawnGreen" FontSize="24" FontWeight="Bold"></Label>
-                    <TextBlock Text="{Binding Player.TotalWin, StringFormat={}{0:c2}, FallbackValue=$0.00}" Foreground="White" FontSize="24" Padding="5"></TextBlock>
+                    <TextBlock Text="{Binding Player.TotalWinnings, StringFormat={}{0:c2}, FallbackValue=$0.00}" Foreground="White" FontSize="24" Padding="5"></TextBlock>
                 </StackPanel>
      
                 <!-- BankRoll -->
