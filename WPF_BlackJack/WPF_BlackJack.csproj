@@ -71,6 +71,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Dealer.cs" />
+    <Compile Include="Models\GameBoard.cs" />
     <Compile Include="Presentation\GameViewModel.cs" />
     <Compile Include="Presentation\ObservableObject.cs" />
     <Compile Include="Models\Player.cs" />

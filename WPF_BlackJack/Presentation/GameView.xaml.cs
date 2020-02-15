@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_BlackJack.Presentation;
 
 namespace WPF_BlackJack
 {
@@ -20,8 +21,10 @@ namespace WPF_BlackJack
     /// </summary>
     public partial class GameView: Window
     {
-        public GameView()
+        GameViewModel _gameViewModel;
+        public GameView(GameViewModel gameViewModel)
         {
+            _gameViewModel = gameViewModel;
             InitializeComponent();
         }
     }
