@@ -5,13 +5,20 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using WPF_BlackJack.Presentation;
 
 namespace WPF_BlackJack
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    public partial class App : Application 
     {
+        public GameViewModel GameViewModel { get; private set; }
+        
+        private void Application_Startup(object sender, StartupEventArgs e) 
+        {
+            GameViewModel gameViewModel = new GameViewModel();
+            GameView gameView = new GameView(gameViewModel);
+            gameView.DataContext = gameViewModel;
+            gameView.Show();
+        }
     }
 }

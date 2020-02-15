@@ -7,7 +7,7 @@ using WPF_BlackJack.Models;
 
 namespace WPF_BlackJack.Presentation
 {
-    class GameViewModel : ObservableObject
+    public class GameViewModel : ObservableObject
     {
         private Dealer _dealer;
         private Player _player;

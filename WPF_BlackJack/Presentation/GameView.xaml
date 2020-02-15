@@ -9,9 +9,7 @@
         Title="BlackJack" Height="1000" Width="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
-    <Window.DataContext>
-        <presentation:GameViewModel/>
-    </Window.DataContext>
+
     <Grid>
         <Grid Background="DarkSlateGray">
             <Grid.ColumnDefinitions>
