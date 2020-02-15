@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPF_BlackJack.Business;
 using WPF_BlackJack.Models;
 
 namespace WPF_BlackJack.Presentation
@@ -10,8 +11,10 @@ namespace WPF_BlackJack.Presentation
     public class GameViewModel : ObservableObject
     {
         private Dealer _dealer;
-        private Player _player;
-
+        private Player _playerOne;
+        private Player _playerTwo;
+        private (Player playerOne, Player playerTwo) _currentPlayers;
+        private GameBusiness _gameBusiness;
 
         public Dealer Dealer
         {
@@ -23,19 +26,39 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
-        public Player Player
+        public Player PlayerOne
         {
-            get => _player;
+            get => _playerOne;
             set
             {
-                _player = value;
-                OnPropertyChanged(nameof(Player));
+                _playerOne = value;
+                OnPropertyChanged(nameof(PlayerOne));
             }
         }
+
+        public Player PlayerTwo 
+        {
+            get => _playerTwo;
+            set 
+            {
+                _playerTwo = value;
+                OnPropertyChanged(nameof(PlayerTwo));
+            }
+        }
+
         public GameViewModel() 
         {
-            _dealer = new Dealer("Mark");
-            _player = new Player("Peter", 100000, 0, 0);
+            _gameBusiness = new GameBusiness();
+
+            InitializeGame();
+        }
+
+        private void InitializeGame()
+        {
+            _currentPlayers = _gameBusiness.GetCurrentPlayers();
+
+            _playerOne = _currentPlayers.playerOne;
+            _playerTwo = _currentPlayers.playerTwo;
         }
     }
 

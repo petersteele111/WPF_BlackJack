@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPF_BlackJack.Models
 {
-    class GameBoard
+    public class GameBoard
     {
         public enum GameState
         {
@@ -23,5 +23,8 @@ namespace WPF_BlackJack.Models
             PlayWon,
             DealerWon
         }
+
+
+
     }
 }

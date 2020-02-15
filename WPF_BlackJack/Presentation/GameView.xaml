@@ -44,13 +44,13 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <!-- Player Name -->
+                <!-- Player One Name -->
                 <Label Grid.Column="0" Grid.Row="0" Content="Player:" FontSize="28" Foreground="White"></Label>
                 <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Text="{Binding Player.Name}" FontSize="28" Foreground="White" Padding="5"></TextBlock>
 
-                <!-- Dealer Name -->
+                <!-- Player Two Name -->
                 <Label Grid.Column="0" Grid.Row="1" Content="Dealer:" FontSize="28" Foreground="White"></Label>
-                <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Text="{Binding Dealer.Name}" FontSize="28" Foreground="White" Padding="5"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Text="{Binding Player.Name}" FontSize="28" Foreground="White" Padding="5"></TextBlock>
 
                 <!-- Dealer Count -->
                 <TextBlock Grid.Column="5" Grid.Row="0"  Text="{Binding Dealer.CardTotal}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="24" Foreground="White"></TextBlock>
