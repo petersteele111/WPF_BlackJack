@@ -27,5 +27,54 @@ namespace WPF_BlackJack
             _gameViewModel = gameViewModel;
             InitializeComponent();
         }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            BlackJackRules blackJackRules = new BlackJackRules();
+            blackJackRules.Show();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e) 
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void NewGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameViewModel.GameCommand(NewGame.Name);
+        }
+
+        private void HitButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameViewModel.PlayerDeal();
+        }
+
+        private void BetButton_Click(object sender, RoutedEventArgs e) 
+        {
+            Button BetButton = sender as Button;
+            switch (BetButton.Name)
+            {
+                case "PlayerBet1":
+                    _gameViewModel.BetButtonCommand(BetButton.Name);
+                    break;
+                case "PlayerBet5":
+                    _gameViewModel.BetButtonCommand(BetButton.Name);
+                    break;
+                case "PlayerBet10":
+                    _gameViewModel.BetButtonCommand(BetButton.Name);
+                    break;
+                case "PlayerBet25":
+                    _gameViewModel.BetButtonCommand(BetButton.Name);
+                    break;
+                case "PlayerBet50":
+                    _gameViewModel.BetButtonCommand(BetButton.Name);
+                    break;
+                case "PlayerBet100":
+                    _gameViewModel.BetButtonCommand(BetButton.Name);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

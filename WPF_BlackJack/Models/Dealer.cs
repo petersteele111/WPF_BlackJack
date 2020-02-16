@@ -1,4 +1,5 @@
-﻿using WPF_BlackJack.Presentation;
+﻿using System.Collections.Generic;
+using WPF_BlackJack.Presentation;
 namespace WPF_BlackJack.Models
 {
     public class Dealer : ObservableObject
@@ -27,9 +28,22 @@ namespace WPF_BlackJack.Models
             }
         }
 
+        private List<string> _card;
+
+        public List<string> Card
+        {
+            get => _card;
+            set 
+            {
+                _card = value;
+                OnPropertyChanged(nameof(Card));
+            }
+        }
+
         public Dealer(string name)
         {
             _name = name;
+            this.Card = new List<string>();
         }
 
 

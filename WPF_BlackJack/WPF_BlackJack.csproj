@@ -65,6 +65,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Presentation\BlackJackRules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\GameView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,11 +78,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Business\GameBusiness.cs" />
-    <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\DataServiceJson.cs" />
     <Compile Include="Data\IDataService.cs" />
     <Compile Include="Models\Dealer.cs" />
     <Compile Include="Models\GameBoard.cs" />
+    <Compile Include="Presentation\BlackJackRules.xaml.cs">
+      <DependentUpon>BlackJackRules.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\GameViewModel.cs" />
     <Compile Include="Presentation\ObservableObject.cs" />
     <Compile Include="Models\Player.cs" />

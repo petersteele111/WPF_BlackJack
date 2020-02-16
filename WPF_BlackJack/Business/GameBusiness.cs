@@ -15,10 +15,10 @@ namespace WPF_BlackJack.Business
             Quit,
             QuitSave
         }
+        
         List<Player> _allPlayers;
 
-        Player _playerOne;
-        Player _playerTwo;
+        Player _player;
 
         IDataService _dataService;
 
@@ -37,8 +37,7 @@ namespace WPF_BlackJack.Business
         {
             _allPlayers = _dataService.ReadAll();
 
-            _playerOne = _allPlayers.FirstOrDefault(p => p.Name == "Peter");
-            _playerTwo = _allPlayers.FirstOrDefault(p => p.Name == "Arya");
+            _player = _allPlayers.FirstOrDefault(p => p.Name == "Peter");
         }
 
         public List<Player> GetAllPlayers() 
@@ -51,11 +50,11 @@ namespace WPF_BlackJack.Business
             _dataService.WriteAll(_allPlayers);
         }
 
-        public (Player playterOne, Player playerTwo) GetCurrentPlayers() 
+        public Player GetCurrentPlayers() 
         {
-            _playerOne = _allPlayers.FirstOrDefault(p => p.Name == "Peter");
-            _playerTwo = _allPlayers.FirstOrDefault(p => p.Name == "Arya");
-            (Player playerOne, Player playerTwo) currentPlayers = (_playerOne, _playerTwo);
+            _player = _allPlayers.FirstOrDefault(p => p.Name == "Peter");
+            Player currentPlayers = _player;
+
 
             return currentPlayers;
         }
