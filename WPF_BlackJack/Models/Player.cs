@@ -1,6 +1,10 @@
-﻿using WPF_BlackJack.Presentation;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using WPF_BlackJack.Presentation;
 namespace WPF_BlackJack.Models
 {
+    [Serializable]
     public class Player : ObservableObject
     {
         private string _name;
@@ -53,6 +57,7 @@ namespace WPF_BlackJack.Models
 
         private int? _cardTotal;
 
+        [JsonIgnore]
         public int? CardTotal
         {
             get => _cardTotal;
@@ -64,8 +69,18 @@ namespace WPF_BlackJack.Models
         }
 
 
+        private List<string> _card;
 
-
+        [JsonIgnore]
+        public List<string> Card
+        {
+            get => _card;
+            set
+            {
+                _card = value;
+                OnPropertyChanged(nameof(Card));
+            }
+        }
 
         public Player(string name, int bankroll, int totalbet, int totalwin)
         {
@@ -73,6 +88,7 @@ namespace WPF_BlackJack.Models
             _bankRoll = bankroll;
             _totalBet = totalbet;
             _totalWinnings = totalwin;
+            this.Card = new List<string>();
         }
     }
 }
