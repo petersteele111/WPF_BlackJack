@@ -1,28 +1,7 @@
 ﻿[
   {
     "Name": "Peter",
-    "BankRoll": 1000000,
-    "TotalBet": 0,
-    "TotalWinnings": 0
-  },
-
-  {
-    "Name": "Karey",
-    "BankRoll": 100000,
-    "TotalBet": 0,
-    "TotalWinnings": 0
-  },
-
-  {
-    "Name": "John",
-    "BankRoll": 1000,
-    "TotalBet": 0,
-    "TotalWinnings": 0
-  },
-
-  {
-    "Name": "Arya",
-    "BankRoll": 25000,
+    "BankRoll": 10000,
     "TotalBet": 0,
     "TotalWinnings": 0
   }

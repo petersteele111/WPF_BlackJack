@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WPF_BlackJack.Business;
 using WPF_BlackJack.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WPF_BlackJack.Presentation
 {
     public class GameViewModel : ObservableObject
     {
+        #region Fields
         private Player _player;
         private Player _currentPlayer;
         private Dealer _dealer;
         private GameBusiness _gameBusiness;
         private GameBoard _gameBoard;
+        #endregion
 
+        #region Models
         public Player Player
         {
             get => _player;
@@ -27,17 +30,31 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
-        public Dealer Dealer 
+        public Dealer Dealer
         {
             get => _dealer;
-            set 
+            set
             {
                 _dealer = value;
                 OnPropertyChanged(nameof(Dealer));
             }
         }
 
-        public GameViewModel() 
+        private string _messages;
+
+        public string Messages
+        {
+            get => _messages;
+            set
+            {
+                _messages = value;
+                OnPropertyChanged(nameof(Messages));
+            }
+        }
+        #endregion
+
+        #region Start Game
+        public GameViewModel()
         {
             _gameBusiness = new GameBusiness();
             _gameBoard = new GameBoard();
@@ -54,19 +71,24 @@ namespace WPF_BlackJack.Presentation
 
             var value = _gameBoard.DealInitalCards();
             _dealer.Card.Add("Images/Cards/b1fv.bmp");
+            _dealer.HiddenCard = ("Images/Cards/" + value.dCards[0] + ".bmp");
             _dealer.Card.Add("Images/Cards/" + value.dCards[1] + ".bmp");
             _player.Card.Add("Images/Cards/" + value.pCards[0] + ".bmp");
             _player.Card.Add("Images/Cards/" + value.pCards[1] + ".bmp");
 
+            int.TryParse(value.dCards[0].Substring(1).TrimStart('0'), out int dCardValue1);
+            int.TryParse(value.dCards[1].Substring(1).TrimStart('0'), out int dCardValue2);
+
+
             int.TryParse(value.pCards[0].Substring(1).TrimStart('0'), out int cardValue1);
             int.TryParse(value.pCards[1].Substring(1).TrimStart('0'), out int cardValue2);
-            
-            if (cardValue1 >=10)
+
+            if (cardValue1 >= 10)
             {
                 cardValue1 = 10;
             }
 
-            if (cardValue2 >=10)
+            if (cardValue2 >= 10)
             {
                 cardValue2 = 10;
             }
@@ -82,10 +104,62 @@ namespace WPF_BlackJack.Presentation
             }
 
 
+            if (dCardValue1 >= 10)
+            {
+                dCardValue1 = 10;
+            }
+
+            if (dCardValue2 >= 10)
+            {
+                dCardValue2 = 10;
+            }
+
+            if (dCardValue1 == 1 && dCardValue2 <= 10)
+            {
+                dCardValue1 = 11;
+            }
+
+            if (dCardValue2 == 1 && dCardValue1 <= 10)
+            {
+                dCardValue2 = 11;
+            }
+
+
 
             _player.CardTotal = cardValue1 + cardValue2;
+            _dealer.HiddenCardTotal = dCardValue1 + dCardValue2;
+            _messages = "Player Bet";
 
 
+        }
+        #endregion
+
+
+        private void ResetBoard()
+        {
+            _gameBoard = new GameBoard();
+            _player.Card.Clear();
+            _messages = "Player Bet";
+            InitializeGame();
+            OnPropertyChanged(nameof(Messages));
+        }
+
+        private void NewGame() 
+        {
+            ResetBoard();
+            _player.BankRoll = 1000;
+            _player.TotalBet = 0;
+            OnPropertyChanged(nameof(Player));
+            OnPropertyChanged(nameof(Dealer));
+        }
+
+        private void NewRound()
+        {
+            _player.TotalBet = 0;
+            _player.TotalWinnings = 0;
+            ResetBoard();
+            OnPropertyChanged(nameof(Player));
+            OnPropertyChanged(nameof(Dealer));
         }
 
         private const int BET1 = 1;
@@ -130,17 +204,28 @@ namespace WPF_BlackJack.Presentation
 
 
         private const int ACE_ADJUSTMENT = 10;
-        public void PlayerDeal() 
+        public void PlayerHit() 
         {
-  
+            _gameBoard.currentGameState = GameBoard.GameState.PlayerHit;
+            _messages = "Player Hit";
             string card = _gameBoard.DealCard();
             int.TryParse(card.Substring(1).TrimStart('0'), out int cardValue1);
 
-            if (_player.CardTotal < 21)
+            if (cardValue1 >= 10)
             {
-                _player.CardTotal += cardValue1;
+                cardValue1 = 10;
             }
 
+            _player.CardTotal += cardValue1;
+            _player.Card.Add("Images/Cards/" + card + ".bmp");
+            CheckPlayerWinCondition();
+            OnPropertyChanged(nameof(Player));
+            OnPropertyChanged(nameof(Messages));
+
+        }
+
+        private void CheckPlayerWinCondition()
+        {
             if (_player.CardTotal >= 21)
             {
                 foreach (var cards in _player.Card)
@@ -152,24 +237,115 @@ namespace WPF_BlackJack.Presentation
                 }
             }
 
-            _player.Card.Add("Images/Cards/" + card + ".bmp");
-            OnPropertyChanged(nameof(Player));
+            if (_player.CardTotal > 21)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.PlayerBust;
+                _messages = "Player Bust";
 
+                OnPropertyChanged(nameof(Messages));
+            }
+
+            if (_player.CardTotal == 21)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.PlayerBlackJack;
+                _messages = "Player BlackJack";
+                _player.TotalWinnings = _player.TotalBet * 2;
+                _player.BankRoll = _player.TotalWinnings;
+                OnPropertyChanged(nameof(Player));
+            }
+        }
+
+        private void CheckDealerWinCondition()
+        {
+            if (_dealer.CardTotal >= 21)
+            {
+                foreach (var cards in _player.Card)
+                {
+                    if (cards.Substring(1).TrimStart('0') == "1")
+                    {
+                        _dealer.CardTotal -= ACE_ADJUSTMENT;
+                    }
+                }
+            }
+        }
+
+        public void PlayerStand()
+        {
+            _gameBoard.currentGameState = GameBoard.GameState.PlayerStand;
+            _messages = "Player Stand";
+            OnPropertyChanged(nameof(Messages));
+            DealerDeal();
         }
 
         public void DealerDeal()
         {
+            _gameBoard.currentGameState = GameBoard.GameState.DealerDraw;
+            _messages = "Dealer Draw";
+            OnPropertyChanged(nameof(Messages));
+            _dealer.CardTotal = _dealer.HiddenCardTotal;
+            _dealer.Card[0] = _dealer.HiddenCard;
             while (_dealer.CardTotal < 17)
             {
-                string cardValue = _gameBoard.DealCard();
-                _dealer.Card.Add("Images/Cards/" + cardValue + ".bmp");
-                OnPropertyChanged(nameof(Dealer));
-                if (_dealer.CardTotal >= 17)
+                string dCard = _gameBoard.DealCard();
+                int.TryParse(dCard.Substring(1).TrimStart('0'), out int dCardValue1);
+
+                if (dCardValue1 >= 10)
                 {
-                    _gameBoard.DealerStand();
+                    dCardValue1 = 10;
                 }
+
+                _dealer.CardTotal += dCardValue1;
+                _dealer.Card.Add("Images/Cards/" + dCard + ".bmp");
+                CheckDealerWinCondition();
+            }
+            CheckGameWinCondition();
+            OnPropertyChanged(nameof(Dealer));
+
+        }
+
+        public void CheckGameWinCondition()
+        {
+            if (_dealer.CardTotal > 21)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.DealerBust;
+                _messages = "Dealer Bust";
+
+                OnPropertyChanged(nameof(Messages));
             }
 
+            if (_dealer.CardTotal == 21)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.DealerBlackJack;
+                _messages = "Dealer BlackJack";
+                OnPropertyChanged(nameof(Messages));
+            }
+
+            if (_player.CardTotal > _dealer.CardTotal)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.PlayerWon;
+                _messages = "Player Won";
+                _player.TotalWinnings = _player.TotalBet * 2;
+                _player.BankRoll += _player.TotalWinnings;
+                OnPropertyChanged(nameof(Player));
+                OnPropertyChanged(nameof(Messages));
+            }
+
+            if (_player.CardTotal < _dealer.CardTotal)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.DealerWon;
+                _messages = "Dealer Won";
+                OnPropertyChanged(nameof(Messages));
+            }
+
+            if (_player.CardTotal == _dealer.CardTotal)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.Draw;
+                _messages = "Draw";
+                _player.TotalWinnings = _player.TotalBet;
+                _player.BankRoll += _player.TotalWinnings;
+                OnPropertyChanged(nameof(Player));
+                OnPropertyChanged(nameof(Messages));
+            }
         }
 
         public void Stand() 
@@ -184,9 +360,24 @@ namespace WPF_BlackJack.Presentation
             switch (commandName)
             {
                 case "NewGame":
-                    InitializeGame();
-                    OnPropertyChanged(nameof(Player));
-                    OnPropertyChanged(nameof(Dealer));
+                    NewGame();
+                    break;
+                case "Quit":
+                    _player.BankRoll += _player.TotalBet;
+                    _player.TotalBet = 0;
+                    _gameBusiness.SaveAllPlayers();
+                    break;
+            }
+        }
+
+        internal void NextRoundCommand(string commandName)
+        {
+            switch (commandName)
+            {
+                case "NextRound":
+                    NewRound();
+                    break;
+                default:
                     break;
             }
         }

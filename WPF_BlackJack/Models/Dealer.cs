@@ -40,6 +40,30 @@ namespace WPF_BlackJack.Models
             }
         }
 
+        private string _hiddenCard;
+
+        public string HiddenCard 
+        {
+            get => _hiddenCard;
+            set
+            {
+                _hiddenCard = value;
+                OnPropertyChanged(nameof(Player));
+            }
+        }
+
+        private int _hiddenCardTotal;
+
+        public int HiddenCardTotal
+        {
+            get => _hiddenCardTotal;
+            set
+            {
+                _hiddenCardTotal = value;
+                OnPropertyChanged(nameof(HiddenCardTotal));
+            }
+        }
+
         public Dealer(string name)
         {
             _name = name;

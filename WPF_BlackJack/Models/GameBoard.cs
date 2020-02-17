@@ -7,24 +7,25 @@ using WPF_BlackJack.Presentation;
 
 namespace WPF_BlackJack.Models
 {
-    public enum GameState 
-    {
-        PlayerBet,
-        PlayerHit,
-        PlayerStand,
-        DealerStand,
-        DealerDraw,
-        PlayerBust,
-        DealerBust,
-        PlayerBlackJack,
-        DealerBlackJack,
-        Draw,
-        PlayerWon,
-        DealerWon
-    }
-
     public class GameBoard : ObservableObject
     {
+        public enum GameState
+        {
+            PlayerBet,
+            PlayerHit,
+            PlayerStand,
+            DealerStand,
+            DealerDraw,
+            PlayerBust,
+            DealerBust,
+            PlayerBlackJack,
+            DealerBlackJack,
+            Draw,
+            PlayerWon,
+            DealerWon
+        };
+
+        public GameState currentGameState { get; set; }
 
         List<string> cards = new List<string>()
         {
@@ -32,15 +33,8 @@ namespace WPF_BlackJack.Models
         };
 
         List<string> selectedCards = new List<string>();
-
         private const int INITIALDEAL = 2;
 
-        internal GameState gameState;
-
-        public void DealerStand() 
-        {
-            gameState = GameState.DealerStand;
-        }
 
         public (List<string> dCards, List<string> pCards) DealInitalCards() 
         {
@@ -75,7 +69,10 @@ namespace WPF_BlackJack.Models
             reshuffleCards();
             Random random = new Random();
             int r1 = random.Next(1, cards.Count);
-            return cards[r1];
+            string dealtCard = cards[r1];
+            selectedCards.Add(cards[r1]);
+            cards.Remove(cards[r1]);
+            return dealtCard;
         }
 
         private void reshuffleCards() 

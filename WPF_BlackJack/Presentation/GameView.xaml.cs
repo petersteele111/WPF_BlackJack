@@ -36,6 +36,7 @@ namespace WPF_BlackJack
 
         private void ExitButton_Click(object sender, RoutedEventArgs e) 
         {
+            _gameViewModel.GameCommand(Quit.Name);
             Application.Current.Shutdown();
         }
 
@@ -46,7 +47,12 @@ namespace WPF_BlackJack
 
         private void HitButton_Click(object sender, RoutedEventArgs e)
         {
-            _gameViewModel.PlayerDeal();
+            _gameViewModel.PlayerHit();
+        }
+
+        private void StandButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameViewModel.PlayerStand();
         }
 
         private void BetButton_Click(object sender, RoutedEventArgs e) 
@@ -75,6 +81,12 @@ namespace WPF_BlackJack
                 default:
                     break;
             }
+        }
+
+        private void NextRoundButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button NextRoundButton = sender as Button;
+            _gameViewModel.NextRoundCommand(NextRoundButton.Name);
         }
     }
 }

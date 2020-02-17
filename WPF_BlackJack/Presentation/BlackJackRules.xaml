@@ -29,10 +29,6 @@
                 <LineBreak/>
                 <Bold Foreground="LightGreen">Bust</Bold> = You have exceeded 21 and have busted (Loss)
                 <LineBreak/>
-                <Bold Foreground="LightGreen">Split</Bold> = If you are initially dealt two of the same value cards, <LineBreak/> may split them and bet as if they are separate hands
-                <LineBreak/>
-                <Bold Foreground="LightGreen">Insurance</Bold> = If the dealer has a face up Ace, you may place a side bet, that the dealer has 21
-                <LineBreak/>
                 <LineBreak/>
                 <Bold Foreground="LightGreen">Objective:</Bold>
                 <LineBreak/>
