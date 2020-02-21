@@ -3,6 +3,7 @@
     "Name": "Peter",
     "BankRoll": 10000,
     "TotalBet": 0,
-    "TotalWinnings": 0
+    "TotalWinnings": 0,
+    "BetAmount": 0
   }
 ]

@@ -22,7 +22,8 @@ namespace WPF_BlackJack.Models
             DealerBlackJack,
             Draw,
             PlayerWon,
-            DealerWon
+            DealerWon,
+            RoundOver
         };
 
         public GameState currentGameState { get; set; }
@@ -85,6 +86,34 @@ namespace WPF_BlackJack.Models
                     cards.Add(card);
                 }
                 selectedCards.Clear();
+            }
+        }
+
+        public bool Clickable() 
+        {
+            if (currentGameState == GameState.PlayerStand)
+            {
+                return false;
+            }
+            else if (currentGameState == GameState.PlayerBet)
+            {
+                return true;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool Visible()
+        {
+            if (currentGameState == GameState.RoundOver)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

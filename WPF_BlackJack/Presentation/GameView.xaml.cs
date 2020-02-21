@@ -83,6 +83,22 @@ namespace WPF_BlackJack
             }
         }
 
+        private void BetModifier_Click(object sender, RoutedEventArgs e)
+        {
+            Button BetModifier = sender as Button;
+            switch (BetModifier.Name)
+            {
+                case "BetDecrease":
+                    _gameViewModel.BetModifierCommand(BetModifier.Name);
+                    break;
+                case "BetIncrease":
+                    _gameViewModel.BetModifierCommand(BetModifier.Name);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void NextRoundButton_Click(object sender, RoutedEventArgs e)
         {
             Button NextRoundButton = sender as Button;

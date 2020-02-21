@@ -8,6 +8,12 @@ namespace WPF_BlackJack.Models
     public class Player : ObservableObject
     {
         private string _name;
+        private int _bankRoll;
+        private int _totalBet;
+        private int _totalWinnings;
+        private int? _cardTotal;
+        private List<string> _card;
+        private int _betAmount;
 
         public string Name
         {
@@ -19,8 +25,6 @@ namespace WPF_BlackJack.Models
             }
         }
 
-        private int _bankRoll;
-
         public int BankRoll
         {
             get => _bankRoll;
@@ -31,8 +35,6 @@ namespace WPF_BlackJack.Models
             }
         }
 
-        private int _totalBet;
-        
         public int TotalBet
         {
             get => _totalBet;
@@ -43,8 +45,6 @@ namespace WPF_BlackJack.Models
             }
         }
 
-        private int _totalWinnings;
-
         public int TotalWinnings
         {
             get => _totalWinnings;
@@ -54,8 +54,6 @@ namespace WPF_BlackJack.Models
                 OnPropertyChanged(nameof(TotalWinnings));
             }
         }
-
-        private int? _cardTotal;
 
         [JsonIgnore]
         public int? CardTotal
@@ -69,8 +67,6 @@ namespace WPF_BlackJack.Models
         }
 
 
-        private List<string> _card;
-
         [JsonIgnore]
         public List<string> Card
         {
@@ -82,12 +78,25 @@ namespace WPF_BlackJack.Models
             }
         }
 
-        public Player(string name, int bankroll, int totalbet, int totalwin)
+        [JsonIgnore]
+        public int BetAmount 
+        { 
+            get => _betAmount;
+            set 
+            {
+                _betAmount = value;
+                OnPropertyChanged(nameof(BetAmount));
+            }      
+        }
+
+
+        public Player(string name, int bankroll, int totalbet, int totalwin, int betAmount)
         {
             _name = name;
             _bankRoll = bankroll;
             _totalBet = totalbet;
             _totalWinnings = totalwin;
+            _betAmount = betAmount;
             this.Card = new List<string>();
         }
     }

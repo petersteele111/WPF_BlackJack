@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using WPF_BlackJack.Business;
+﻿using WPF_BlackJack.Business;
 using WPF_BlackJack.Models;
 
 namespace WPF_BlackJack.Presentation
@@ -51,6 +45,31 @@ namespace WPF_BlackJack.Presentation
                 OnPropertyChanged(nameof(Messages));
             }
         }
+
+        private bool _canClick;
+
+        public bool CanClick
+        {
+            get => _canClick;
+            set
+            {
+                _canClick = value;
+                OnPropertyChanged(nameof(CanClick));
+            }
+        }
+
+        private bool _isVisibile;
+
+        public bool IsVisibile
+        {
+            get => _isVisibile;
+            set
+            {
+                _isVisibile = value;
+                OnPropertyChanged(nameof(IsVisibile));
+            }
+        }
+
         #endregion
 
         #region Start Game
@@ -128,12 +147,18 @@ namespace WPF_BlackJack.Presentation
 
             _player.CardTotal = cardValue1 + cardValue2;
             _dealer.HiddenCardTotal = dCardValue1 + dCardValue2;
+            _gameBoard.currentGameState = GameBoard.GameState.PlayerBet;
+            _canClick = _gameBoard.Clickable();
+            _isVisibile = false;
             _messages = "Player Bet";
+            OnPropertyChanged(nameof(CanClick));
+            OnPropertyChanged(nameof(IsVisibile));
 
 
         }
         #endregion
 
+        #region Reset/New/GameBoard
 
         private void ResetBoard()
         {
@@ -162,6 +187,10 @@ namespace WPF_BlackJack.Presentation
             OnPropertyChanged(nameof(Dealer));
         }
 
+        #endregion
+
+        #region Game Logic
+
         private const int BET1 = 1;
         private const int BET5 = 5;
         private const int BET10 = 10;
@@ -174,28 +203,51 @@ namespace WPF_BlackJack.Presentation
             switch (betCommand)
             {
                 case "PlayerBet1":
+                    _player.BetAmount = BET1;
                     _player.TotalBet += BET1;
                     _player.BankRoll -= BET1;
                     break;
                 case "PlayerBet5":
+                    _player.BetAmount = BET5;
                     _player.TotalBet += BET5;
                     _player.BankRoll -= BET5;
                     break;
                 case "PlayerBet10":
+                    _player.BetAmount = BET10;
                     _player.TotalBet += BET10;
                     _player.BankRoll -= BET10;
                     break;
                 case "PlayerBet25":
+                    _player.BetAmount = BET25;
                     _player.TotalBet += BET25;
                     _player.BankRoll -= BET25;
                     break;
                 case "PlayerBet50":
+                    _player.BetAmount = BET50;
                     _player.TotalBet += BET50;
                     _player.BankRoll -= BET50;
                     break;
                 case "PlayerBet100":
+                    _player.BetAmount = BET100;
                     _player.TotalBet += BET100;
                     _player.BankRoll -= BET100;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        internal void BetModifierCommand(string betModifier)
+        {
+            switch (betModifier)
+            {
+                case "BetDecrease":
+                    _player.TotalBet -= _player.BetAmount;
+                    _player.BankRoll += _player.BetAmount;
+                    break;
+                case "BetIncrease":
+                    _player.TotalBet += _player.BetAmount;
+                    _player.BankRoll -= _player.BetAmount;
                     break;
                 default:
                     break;
@@ -206,21 +258,30 @@ namespace WPF_BlackJack.Presentation
         private const int ACE_ADJUSTMENT = 10;
         public void PlayerHit() 
         {
-            _gameBoard.currentGameState = GameBoard.GameState.PlayerHit;
-            _messages = "Player Hit";
-            string card = _gameBoard.DealCard();
-            int.TryParse(card.Substring(1).TrimStart('0'), out int cardValue1);
-
-            if (cardValue1 >= 10)
+            if (_player.TotalBet >= 1)
             {
-                cardValue1 = 10;
+                _gameBoard.currentGameState = GameBoard.GameState.PlayerHit;
+                _messages = "Player Hit";
+                string card = _gameBoard.DealCard();
+                int.TryParse(card.Substring(1).TrimStart('0'), out int cardValue1);
+
+                if (cardValue1 >= 10)
+                {
+                    cardValue1 = 10;
+                }
+
+                _player.CardTotal += cardValue1;
+                _player.Card.Add("Images/Cards/" + card + ".bmp");
+                CheckPlayerWinCondition();
+                OnPropertyChanged(nameof(Player));
+                OnPropertyChanged(nameof(Messages));
+            }
+            else
+            {
+                _messages = "You Must First Place A Bet!";
+                OnPropertyChanged(nameof(Messages));
             }
 
-            _player.CardTotal += cardValue1;
-            _player.Card.Add("Images/Cards/" + card + ".bmp");
-            CheckPlayerWinCondition();
-            OnPropertyChanged(nameof(Player));
-            OnPropertyChanged(nameof(Messages));
 
         }
 
@@ -255,6 +316,25 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
+        public void PlayerStand()
+        {
+            if (_player.TotalBet >= 1 )
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.PlayerStand;
+                _canClick = _gameBoard.Clickable();
+                _messages = "Player Stand";
+                OnPropertyChanged(nameof(Messages));
+                OnPropertyChanged(nameof(CanClick));
+                DealerDeal();
+            }
+            else
+            {
+                _messages = "You Cannot Stand Without Betting First! Place A Bet!";
+                OnPropertyChanged(nameof(Messages));
+            }
+
+        }
+
         private void CheckDealerWinCondition()
         {
             if (_dealer.CardTotal >= 21)
@@ -267,14 +347,6 @@ namespace WPF_BlackJack.Presentation
                     }
                 }
             }
-        }
-
-        public void PlayerStand()
-        {
-            _gameBoard.currentGameState = GameBoard.GameState.PlayerStand;
-            _messages = "Player Stand";
-            OnPropertyChanged(nameof(Messages));
-            DealerDeal();
         }
 
         public void DealerDeal()
@@ -308,38 +380,42 @@ namespace WPF_BlackJack.Presentation
         {
             if (_dealer.CardTotal > 21)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.DealerBust;
+                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
                 _messages = "Dealer Bust";
                 _player.TotalWinnings = _player.TotalBet * 2;
                 _player.BankRoll += _player.TotalWinnings;
             }
             else if (_dealer.CardTotal == 21)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.DealerBlackJack;
+                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
                 _messages = "Dealer BlackJack";
             }
             else if (_player.CardTotal > _dealer.CardTotal)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.PlayerWon;
+                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
                 _messages = "Player Won";
                 _player.TotalWinnings = _player.TotalBet * 2;
                 _player.BankRoll += _player.TotalWinnings;
             }
             else if (_player.CardTotal < _dealer.CardTotal)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.DealerWon;
+                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
                 _messages = "Dealer Won";
             }
             else if (_player.CardTotal == _dealer.CardTotal)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.Draw;
+                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
                 _messages = "Draw";
                 _player.TotalWinnings = _player.TotalBet;
                 _player.BankRoll += _player.TotalWinnings;
             }
+
+           _isVisibile = _gameBoard.Visible();
+
             OnPropertyChanged(nameof(Dealer));
             OnPropertyChanged(nameof(Player));
             OnPropertyChanged(nameof(Messages));
+            OnPropertyChanged(nameof(IsVisibile));
         }
 
         public void Stand() 
@@ -376,7 +452,6 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
-
-    } 
-
+        #endregion
+    }
 }
