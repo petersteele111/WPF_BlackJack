@@ -151,8 +151,15 @@
                     <TextBlock Text="{Binding Player.TotalBet, StringFormat={}{0:c2}, FallbackValue=$0.00}" Foreground="White" FontSize="24" Padding="5" Margin="7, 0, 0, 0"></TextBlock>
                 </StackPanel>
 
-                <!-- Total Win -->
+
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30, 0, 0, 0">
+                    <Label Content="Bet Modifier: " FontSize="24" Foreground="Red" FontWeight="Bold" />
+                    <Button Content="-" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"></Button>
+                    <Button Content="+" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                </StackPanel>
+
+                <!-- Total Win -->
+                <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-40 0 0 0 ">
                     <Label Content="Total Win:" Foreground="LawnGreen" FontSize="24" FontWeight="Bold"></Label>
                     <TextBlock Text="{Binding Player.TotalWinnings, StringFormat={}{0:c2}, FallbackValue=$0.00}" Foreground="White" FontSize="24" Padding="5"></TextBlock>
                 </StackPanel>
@@ -162,11 +169,12 @@
                     <Label Content="Bankroll:" Foreground="LawnGreen" FontSize="24" FontWeight="Bold"></Label>
                     <TextBlock Margin="5" Text="{Binding Player.BankRoll, StringFormat={}{0:c2}}" FontSize="24" Foreground="White"></TextBlock>
                 </StackPanel>
+
                 
                 <!-- Messages -->
-                <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="30, 0, 0, 0">
-                    <Label Content="Messages:" Foreground="Red" FontSize="24" FontWeight="Bold"></Label>
-                    <TextBlock Margin="5" Text="{Binding Messages}" FontSize="24" Foreground="White"></TextBlock>
+                <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="3"  Margin="30, 0, 0, 0">
+                    <Label Content="Messages:" Foreground="LawnGreen" FontSize="24" FontWeight="Bold"></Label>
+                    <TextBlock Margin="5" Text="{Binding Messages}" FontSize="24" Foreground="White" ></TextBlock>
                 </StackPanel>
             </Grid>
 

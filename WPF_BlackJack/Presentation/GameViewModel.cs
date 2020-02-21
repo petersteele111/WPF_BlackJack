@@ -300,6 +300,7 @@ namespace WPF_BlackJack.Presentation
             }
             CheckGameWinCondition();
             OnPropertyChanged(nameof(Dealer));
+            OnPropertyChanged(nameof(Player));
 
         }
 
@@ -309,43 +310,36 @@ namespace WPF_BlackJack.Presentation
             {
                 _gameBoard.currentGameState = GameBoard.GameState.DealerBust;
                 _messages = "Dealer Bust";
-
-                OnPropertyChanged(nameof(Messages));
+                _player.TotalWinnings = _player.TotalBet * 2;
+                _player.BankRoll += _player.TotalWinnings;
             }
-
-            if (_dealer.CardTotal == 21)
+            else if (_dealer.CardTotal == 21)
             {
                 _gameBoard.currentGameState = GameBoard.GameState.DealerBlackJack;
                 _messages = "Dealer BlackJack";
-                OnPropertyChanged(nameof(Messages));
             }
-
-            if (_player.CardTotal > _dealer.CardTotal)
+            else if (_player.CardTotal > _dealer.CardTotal)
             {
                 _gameBoard.currentGameState = GameBoard.GameState.PlayerWon;
                 _messages = "Player Won";
                 _player.TotalWinnings = _player.TotalBet * 2;
                 _player.BankRoll += _player.TotalWinnings;
-                OnPropertyChanged(nameof(Player));
-                OnPropertyChanged(nameof(Messages));
             }
-
-            if (_player.CardTotal < _dealer.CardTotal)
+            else if (_player.CardTotal < _dealer.CardTotal)
             {
                 _gameBoard.currentGameState = GameBoard.GameState.DealerWon;
                 _messages = "Dealer Won";
-                OnPropertyChanged(nameof(Messages));
             }
-
-            if (_player.CardTotal == _dealer.CardTotal)
+            else if (_player.CardTotal == _dealer.CardTotal)
             {
                 _gameBoard.currentGameState = GameBoard.GameState.Draw;
                 _messages = "Draw";
                 _player.TotalWinnings = _player.TotalBet;
                 _player.BankRoll += _player.TotalWinnings;
-                OnPropertyChanged(nameof(Player));
-                OnPropertyChanged(nameof(Messages));
             }
+            OnPropertyChanged(nameof(Dealer));
+            OnPropertyChanged(nameof(Player));
+            OnPropertyChanged(nameof(Messages));
         }
 
         public void Stand() 
