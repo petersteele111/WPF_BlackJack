@@ -106,19 +106,19 @@
             <!-- Bet Chips -->
             <Canvas>
 
-                <Button Canvas.Left="50" Canvas.Top="440" Name="PlayerBet1" Click="BetButton_Click" IsEnabled="{Binding CanClick}" Style="{StaticResource Change1Chip}"/>
+                <Button Canvas.Left="50" Canvas.Top="440" Name="PlayerBet1" Click="BetButton_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource Change1Chip}"/>
 
-                <Button Width="100" Canvas.Left="160" Canvas.Top="500" Name="PlayerBet5" Click="BetButton_Click" IsEnabled="{Binding CanClick}" Style="{StaticResource Change5Chip}"/>
+                <Button Width="100" Canvas.Left="160" Canvas.Top="500" Name="PlayerBet5" Click="BetButton_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource Change5Chip}"/>
 
-                <Button Width="100" Canvas.Left="280" Canvas.Top="540" Name="PlayerBet10" Click="BetButton_Click" IsEnabled="{Binding CanClick}" Style="{StaticResource Change10Chip}"/>
+                <Button Width="100" Canvas.Left="280" Canvas.Top="540" Name="PlayerBet10" Click="BetButton_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource Change10Chip}"/>
 
 
 
-                <Button Width="100" Canvas.Left="620" Canvas.Top="540" Name="PlayerBet25" Click="BetButton_Click" IsEnabled="{Binding CanClick}" Style="{StaticResource Change25Chip}"/>
+                <Button Width="100" Canvas.Left="620" Canvas.Top="540" Name="PlayerBet25" Click="BetButton_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource Change25Chip}"/>
 
-                <Button  Width="100" Canvas.Left="735" Canvas.Top="500" Name="PlayerBet50" Click="BetButton_Click" IsEnabled="{Binding CanClick}" Style="{StaticResource Change50Chip}"/>
+                <Button  Width="100" Canvas.Left="735" Canvas.Top="500" Name="PlayerBet50" Click="BetButton_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource Change50Chip}"/>
 
-                <Button  Width="100" Canvas.Left="840" Canvas.Top="450" Name="PlayerBet100" Click="BetButton_Click" IsEnabled="{Binding CanClick}" Style="{StaticResource Change100Chip}"/>
+                <Button  Width="100" Canvas.Left="840" Canvas.Top="450" Name="PlayerBet100" Click="BetButton_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource Change100Chip}"/>
 
 
             </Canvas>
@@ -148,8 +148,8 @@
                 <!-- Bet Modifier -->
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30, 0, 0, 0">
                     <Label Content="Bet Modifier: " FontSize="24" Foreground="Red" FontWeight="Bold" />
-                    <Button Content="-" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Name="BetDecrease" Click="BetModifier_Click" IsEnabled="{Binding CanClick}"></Button>
-                    <Button Content="+" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Name="BetIncrease" Click="BetModifier_Click" IsEnabled="{Binding CanClick}"></Button>
+                    <Button Content="-" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Name="BetDecrease" Click="BetModifier_Click" IsEnabled="{Binding CanBet}"></Button>
+                    <Button Content="+" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Name="BetIncrease" Click="BetModifier_Click" IsEnabled="{Binding CanBet}"></Button>
                 </StackPanel>
 
                 <!-- Total Win -->
@@ -184,7 +184,8 @@
                         <Button IsEnabled="{Binding CanClick}" Content="Stand" FontSize="24" Width="80" Height="80" Click="StandButton_Click"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Next Round" FontSize="24" Width="165" Margin="5" Height="80" Click="NextRoundButton_Click" Name="NextRound" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}" />
+                        <Button Content="Next &#xa;Round" FontSize="24" Width="80" Margin="5" Height="80" Click="ActionButton_Click" Name="NextRound" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}" />
+                        <Button Content="Deal" FontSize="24" Width="80" Height="80" Margin="5" Click="ActionButton_Click" Name="Deal" Visibility="{Binding IsDealVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}" />
                     </StackPanel>
                 </StackPanel>
             </Canvas>

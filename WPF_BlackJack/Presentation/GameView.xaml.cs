@@ -99,10 +99,10 @@ namespace WPF_BlackJack
             }
         }
 
-        private void NextRoundButton_Click(object sender, RoutedEventArgs e)
+        private void ActionButton_Click(object sender, RoutedEventArgs e)
         {
-            Button NextRoundButton = sender as Button;
-            _gameViewModel.NextRoundCommand(NextRoundButton.Name);
+            Button ActionButton = sender as Button;
+            _gameViewModel.ActionButtonCommand(ActionButton.Name);
         }
     }
 }

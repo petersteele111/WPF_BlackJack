@@ -13,7 +13,7 @@ namespace WPF_BlackJack.Presentation
         private GameBoard _gameBoard;
         #endregion
 
-        #region Models
+        #region Properties
         public Player Player
         {
             get => _player;
@@ -46,6 +46,7 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
+
         private bool _canClick;
 
         public bool CanClick
@@ -58,6 +59,18 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
+        private bool _canBet;
+
+        public bool CanBet
+        {
+            get => _canBet;
+            set
+            {
+                _canBet = value;
+                OnPropertyChanged(nameof(CanBet));
+            }
+        }
+
         private bool _isVisible;
 
         public bool IsVisible
@@ -67,6 +80,18 @@ namespace WPF_BlackJack.Presentation
             {
                 _isVisible = value;
                 OnPropertyChanged(nameof(IsVisible));
+            }
+        }
+
+        private bool _isDealVisible;
+
+        public bool IsDealVisible
+        {
+            get => _isDealVisible;
+            set
+            {
+                _isDealVisible = value;
+                OnPropertyChanged(nameof(IsDealVisible));
             }
         }
 
@@ -87,6 +112,24 @@ namespace WPF_BlackJack.Presentation
 
             _player = _currentPlayer;
             _dealer = new Dealer("Mark");
+
+            _gameBoard.currentGameState = GameBoard.GameState.PlayerBet;
+            _canBet = true;
+            _isDealVisible = true;
+            _isVisible = false;
+            _messages = "Player Bet";
+            OnPropertyChanged(nameof(IsDealVisible));
+            OnPropertyChanged(nameof(CanBet));
+            OnPropertyChanged(nameof(IsVisible));
+        }
+
+        public void Deal()
+        {
+            _canBet = false;
+            OnPropertyChanged(nameof(CanBet));
+
+            _canClick = _gameBoard.Clickable();
+            OnPropertyChanged(nameof(CanClick));
 
             var value = _gameBoard.DealInitalCards();
             _dealer.Card.Add("Images/Cards/b1fv.bmp");
@@ -143,19 +186,29 @@ namespace WPF_BlackJack.Presentation
                 dCardValue2 = 11;
             }
 
-
-
             _player.CardTotal = cardValue1 + cardValue2;
             _dealer.HiddenCardTotal = dCardValue1 + dCardValue2;
-            _gameBoard.currentGameState = GameBoard.GameState.PlayerBet;
-            _canClick = _gameBoard.Clickable();
-            _isVisible = false;
-            _messages = "Player Bet";
-            OnPropertyChanged(nameof(CanClick));
-            OnPropertyChanged(nameof(IsVisible));
+            IsDealVisible = false;
+            OnPropertyChanged(nameof(IsDealVisible));
+            OnPropertyChanged(nameof(Dealer));
+            OnPropertyChanged(nameof(Player));
 
+            if (_player.CardTotal == 21)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.PlayerBlackJack;
+                _messages = "Player BlackJack";
+                _player.TotalWinnings = _player.TotalBet * 2;
+                _player.BankRoll = _player.TotalWinnings;
 
+                _isVisible = _gameBoard.Visible();
+
+                _canClick = _gameBoard.Clickable();
+                OnPropertyChanged(nameof(IsVisible));
+                OnPropertyChanged(nameof(CanClick));
+                OnPropertyChanged(nameof(Player));
+            }
         }
+
         #endregion
 
         #region Reset/New/GameBoard
@@ -172,7 +225,6 @@ namespace WPF_BlackJack.Presentation
         private void NewGame() 
         {
             ResetBoard();
-            _player.BankRoll = 1000;
             _player.TotalBet = 0;
             OnPropertyChanged(nameof(Player));
             OnPropertyChanged(nameof(Dealer));
@@ -182,6 +234,7 @@ namespace WPF_BlackJack.Presentation
         {
             _player.TotalBet = 0;
             _player.TotalWinnings = 0;
+            _player.CardTotal = null;
             ResetBoard();
             OnPropertyChanged(nameof(Player));
             OnPropertyChanged(nameof(Dealer));
@@ -191,6 +244,17 @@ namespace WPF_BlackJack.Presentation
 
         #region Game Logic
 
+        #region BettingLogic
+        public void CheckBankRoll(int bet, int bankRoll)
+        {
+            if (bankRoll > 0)
+            {
+                _player.BetAmount = bet;
+                _player.TotalBet += bet;
+                _player.BankRoll -= bet;
+            }
+        }
+
         private const int BET1 = 1;
         private const int BET5 = 5;
         private const int BET10 = 10;
@@ -198,39 +262,27 @@ namespace WPF_BlackJack.Presentation
         private const int BET50 = 50;
         private const int BET100 = 100;
 
-        internal void BetButtonCommand(string betCommand) 
+        internal void BetButtonCommand(string betCommand)
         {
             switch (betCommand)
             {
                 case "PlayerBet1":
-                    _player.BetAmount = BET1;
-                    _player.TotalBet += BET1;
-                    _player.BankRoll -= BET1;
+                    CheckBankRoll(BET1, _player.BankRoll);
                     break;
                 case "PlayerBet5":
-                    _player.BetAmount = BET5;
-                    _player.TotalBet += BET5;
-                    _player.BankRoll -= BET5;
+                    CheckBankRoll(BET5, _player.BankRoll);
                     break;
                 case "PlayerBet10":
-                    _player.BetAmount = BET10;
-                    _player.TotalBet += BET10;
-                    _player.BankRoll -= BET10;
+                    CheckBankRoll(BET10, _player.BankRoll);
                     break;
                 case "PlayerBet25":
-                    _player.BetAmount = BET25;
-                    _player.TotalBet += BET25;
-                    _player.BankRoll -= BET25;
+                    CheckBankRoll(BET25, _player.BankRoll);
                     break;
                 case "PlayerBet50":
-                    _player.BetAmount = BET50;
-                    _player.TotalBet += BET50;
-                    _player.BankRoll -= BET50;
+                    CheckBankRoll(BET50, _player.BankRoll);
                     break;
                 case "PlayerBet100":
-                    _player.BetAmount = BET100;
-                    _player.TotalBet += BET100;
-                    _player.BankRoll -= BET100;
+                    CheckBankRoll(BET100, _player.BankRoll);
                     break;
                 default:
                     break;
@@ -242,21 +294,31 @@ namespace WPF_BlackJack.Presentation
             switch (betModifier)
             {
                 case "BetDecrease":
-                    _player.TotalBet -= _player.BetAmount;
-                    _player.BankRoll += _player.BetAmount;
+                    if (_player.TotalBet - _player.BetAmount >= 0)
+                    {
+                        _player.TotalBet -= _player.BetAmount;
+                        _player.BankRoll += _player.BetAmount;
+                    }
                     break;
                 case "BetIncrease":
-                    _player.TotalBet += _player.BetAmount;
-                    _player.BankRoll -= _player.BetAmount;
+                    if (_player.BankRoll >= 0)
+                    {
+                        _player.TotalBet += _player.BetAmount;
+                        _player.BankRoll -= _player.BetAmount;
+                    }
                     break;
                 default:
                     break;
             }
         }
 
+        #endregion
+
+        #region ActionButtonLogic
 
         private const int ACE_ADJUSTMENT = 10;
-        public void PlayerHit() 
+
+        public void PlayerHit()
         {
             if (_player.TotalBet >= 1)
             {
@@ -285,45 +347,9 @@ namespace WPF_BlackJack.Presentation
 
         }
 
-        private void CheckPlayerWinCondition()
-        {
-            if (_player.CardTotal >= 21)
-            {
-                foreach (var cards in _player.Card)
-                {
-                    if (cards.Substring(1).TrimStart('0') == "1")
-                    {
-                        _player.CardTotal -= ACE_ADJUSTMENT;
-                    }
-                }
-            }
-
-            if (_player.CardTotal > 21)
-            {
-                _gameBoard.currentGameState = GameBoard.GameState.PlayerBust;
-                _messages = "Player Bust";
-                _canClick = _gameBoard.Clickable();
-
-                OnPropertyChanged(nameof(Messages));
-                OnPropertyChanged(nameof(CanClick));
-            }
-
-            if (_player.CardTotal == 21)
-            {
-                _gameBoard.currentGameState = GameBoard.GameState.PlayerBlackJack;
-                _messages = "Player BlackJack";
-                _player.TotalWinnings = _player.TotalBet * 2;
-                _player.BankRoll = _player.TotalWinnings;
-
-                _canClick = _gameBoard.Clickable();
-                OnPropertyChanged(nameof(CanClick));
-                OnPropertyChanged(nameof(Player));
-            }
-        }
-
         public void PlayerStand()
         {
-            if (_player.TotalBet >= 1 )
+            if (_player.TotalBet >= 1)
             {
                 _gameBoard.currentGameState = GameBoard.GameState.PlayerStand;
                 _canClick = _gameBoard.Clickable();
@@ -338,20 +364,6 @@ namespace WPF_BlackJack.Presentation
                 OnPropertyChanged(nameof(Messages));
             }
 
-        }
-
-        private void CheckDealerWinCondition()
-        {
-            if (_dealer.CardTotal >= 21)
-            {
-                foreach (var cards in _player.Card)
-                {
-                    if (cards.Substring(1).TrimStart('0') == "1")
-                    {
-                        _dealer.CardTotal -= ACE_ADJUSTMENT;
-                    }
-                }
-            }
         }
 
         public void DealerDeal()
@@ -381,43 +393,147 @@ namespace WPF_BlackJack.Presentation
 
         }
 
+        #endregion
+
+        #region WinConditions
+
+        private void CheckDealerWinCondition()
+        {
+            if (_dealer.CardTotal >= 21)
+            {
+                foreach (var cards in _player.Card)
+                {
+                    if (cards.Substring(1).TrimStart('0') == "1")
+                    {
+                        _dealer.CardTotal -= ACE_ADJUSTMENT;
+                    }
+                }
+            }
+        }
+
+        private void CheckPlayerWinCondition()
+        {
+            if (_player.CardTotal >= 21)
+            {
+                foreach (var cards in _player.Card)
+                {
+                    if (cards.Substring(1).TrimStart('0') == "1")
+                    {
+                        _player.CardTotal -= ACE_ADJUSTMENT;
+                    }
+                }
+            }
+
+            if (_player.CardTotal > 21)
+            {
+                PlayerBust();
+            }
+
+            if (_player.CardTotal == 21)
+            {
+                PlayerBlackJack();
+            }
+        }
+
+        public void PlayerBlackJack()
+        {
+            if (_player.CardTotal == 21)
+            {
+                _gameBoard.currentGameState = GameBoard.GameState.PlayerBlackJack;
+                _messages = "Player BlackJack";
+                _player.TotalWinnings = _player.TotalBet * 2;
+                _player.BankRoll = _player.TotalWinnings;
+
+                _isVisible = _gameBoard.Visible();
+
+                _canClick = _gameBoard.Clickable();
+                OnPropertyChanged(nameof(Messages));
+                OnPropertyChanged(nameof(IsVisible));
+                OnPropertyChanged(nameof(CanClick));
+                OnPropertyChanged(nameof(Player));
+            }
+        }
+
+        public void PlayerBust()
+        {
+            _gameBoard.currentGameState = GameBoard.GameState.PlayerBust;
+            _messages = "Player Bust";
+            _canClick = _gameBoard.Clickable();
+            _isVisible = _gameBoard.Visible();
+
+            OnPropertyChanged(nameof(IsVisible));
+            OnPropertyChanged(nameof(Messages));
+            OnPropertyChanged(nameof(CanClick));
+        }
+
+        public void DealerBust()
+        {
+            _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
+            _messages = "Dealer Bust";
+            _player.TotalWinnings = _player.TotalBet * 2;
+            _player.BankRoll += _player.TotalWinnings;
+        }
+
+        public void DealerBlackJack()
+        {
+            _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
+            _messages = "Dealer BlackJack";
+            _player.TotalWinnings = 0;
+        }
+
+        public void DealerWin()
+        {
+            _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
+            _messages = "Dealer Won";
+            _player.TotalWinnings = 0;
+        }
+
+        public void PlayerWin()
+        {
+            _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
+            _messages = "Player Won";
+            _player.TotalWinnings = _player.TotalBet * 2;
+            _player.BankRoll += _player.TotalWinnings;
+        }
+
+        public void DrawGame()
+        {
+            _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
+            _messages = "Draw";
+            _player.TotalWinnings = _player.TotalBet;
+            _player.BankRoll += _player.TotalWinnings;
+        }
+
+
         public void CheckGameWinCondition()
         {
             if (_dealer.CardTotal > 21)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
-                _messages = "Dealer Bust";
-                _player.TotalWinnings = _player.TotalBet * 2;
-                _player.BankRoll += _player.TotalWinnings;
+                DealerBust();
             }
             else if (_dealer.CardTotal == 21)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
-                _messages = "Dealer BlackJack";
-                _player.TotalWinnings = 0;
+                DealerBlackJack();
             }
             else if (_player.CardTotal > _dealer.CardTotal)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
-                _messages = "Player Won";
-                _player.TotalWinnings = _player.TotalBet * 2;
-                _player.BankRoll += _player.TotalWinnings;
+                PlayerWin();
             }
             else if (_player.CardTotal < _dealer.CardTotal)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
-                _messages = "Dealer Won";
-                _player.TotalWinnings = 0;
+                DealerWin();
             }
             else if (_player.CardTotal == _dealer.CardTotal)
             {
-                _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
-                _messages = "Draw";
-                _player.TotalWinnings = _player.TotalBet;
-                _player.BankRoll += _player.TotalWinnings;
+                DrawGame();
+            }
+            else
+            {
+                _messages = "Something went wrong! You should never see this message";
+                OnPropertyChanged(nameof(Messages));
             }
 
-           IsVisible  = _gameBoard.Visible();
+            _isVisible = _gameBoard.Visible();
 
             OnPropertyChanged(nameof(Dealer));
             OnPropertyChanged(nameof(Player));
@@ -425,14 +541,10 @@ namespace WPF_BlackJack.Presentation
             OnPropertyChanged(nameof(IsVisible));
         }
 
-        public void Stand() 
-        {
-            DealerDeal();
-        }
+        #endregion
 
-
-
-        internal void GameCommand(string commandName) 
+        #region ButtonCommands
+        internal void GameCommand(string commandName)
         {
             switch (commandName)
             {
@@ -447,17 +559,32 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
-        internal void NextRoundCommand(string commandName)
+        internal void ActionButtonCommand(string commandName)
         {
             switch (commandName)
             {
                 case "NextRound":
+                    _gameBoard.currentGameState = GameBoard.GameState.PlayerBet;
+                    _canClick = _gameBoard.Clickable();
                     NewRound();
+                    break;
+                case "Deal":
+                    if (_player.TotalBet < 1)
+                    {
+                        _messages = "You Must Place A Bet Before Dealing!";
+                        OnPropertyChanged(nameof(Messages));
+                    }
+                    else
+                    {
+                        Deal();
+                    }
                     break;
                 default:
                     break;
             }
         }
+
+        #endregion
 
         #endregion
     }

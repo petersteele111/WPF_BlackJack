@@ -9,6 +9,7 @@ namespace WPF_BlackJack.Models
 {
     public class GameBoard : ObservableObject
     {
+
         public enum GameState
         {
             PlayerBet,
@@ -23,7 +24,8 @@ namespace WPF_BlackJack.Models
             Draw,
             PlayerWon,
             DealerWon,
-            RoundOver
+            RoundOver,
+            NewRound
         };
 
         public GameState currentGameState { get; set; }
@@ -107,7 +109,7 @@ namespace WPF_BlackJack.Models
 
         public bool Visible()
         {
-            if (currentGameState == GameState.RoundOver)
+            if (currentGameState == GameState.RoundOver || currentGameState == GameState.PlayerBlackJack || currentGameState == GameState.PlayerBust)
             {
                 return true;
             }
