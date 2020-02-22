@@ -314,6 +314,9 @@ namespace WPF_BlackJack.Presentation
                 _messages = "Player BlackJack";
                 _player.TotalWinnings = _player.TotalBet * 2;
                 _player.BankRoll = _player.TotalWinnings;
+
+                _canClick = _gameBoard.Clickable();
+                OnPropertyChanged(nameof(CanClick));
                 OnPropertyChanged(nameof(Player));
             }
         }
