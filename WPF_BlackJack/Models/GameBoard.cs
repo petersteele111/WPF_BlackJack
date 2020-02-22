@@ -91,7 +91,7 @@ namespace WPF_BlackJack.Models
 
         public bool Clickable() 
         {
-            if (currentGameState == GameState.PlayerStand)
+            if (currentGameState == GameState.PlayerStand || currentGameState == GameState.PlayerBust)
             {
                 return false;
             }

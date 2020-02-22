@@ -302,8 +302,10 @@ namespace WPF_BlackJack.Presentation
             {
                 _gameBoard.currentGameState = GameBoard.GameState.PlayerBust;
                 _messages = "Player Bust";
+                _canClick = _gameBoard.Clickable();
 
                 OnPropertyChanged(nameof(Messages));
+                OnPropertyChanged(nameof(CanClick));
             }
 
             if (_player.CardTotal == 21)
@@ -389,6 +391,7 @@ namespace WPF_BlackJack.Presentation
             {
                 _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
                 _messages = "Dealer BlackJack";
+                _player.TotalWinnings = 0;
             }
             else if (_player.CardTotal > _dealer.CardTotal)
             {
@@ -401,6 +404,7 @@ namespace WPF_BlackJack.Presentation
             {
                 _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
                 _messages = "Dealer Won";
+                _player.TotalWinnings = 0;
             }
             else if (_player.CardTotal == _dealer.CardTotal)
             {
