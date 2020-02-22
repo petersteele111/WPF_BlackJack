@@ -184,7 +184,7 @@
                         <Button IsEnabled="{Binding CanClick}" Content="Stand" FontSize="24" Width="80" Height="80" Click="StandButton_Click"></Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Next Round" FontSize="24" Width="165" Margin="5" Height="80" Click="NextRoundButton_Click" Name="NextRound" Visibility="{Binding GameViewModel.IsVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}" />
+                        <Button Content="Next Round" FontSize="24" Width="165" Margin="5" Height="80" Click="NextRoundButton_Click" Name="NextRound" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}" />
                     </StackPanel>
                 </StackPanel>
             </Canvas>

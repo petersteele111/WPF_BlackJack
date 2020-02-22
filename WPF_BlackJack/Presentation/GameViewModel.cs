@@ -58,15 +58,15 @@ namespace WPF_BlackJack.Presentation
             }
         }
 
-        private bool _isVisibile;
+        private bool _isVisible;
 
-        public bool IsVisibile
+        public bool IsVisible
         {
-            get => _isVisibile;
+            get => _isVisible;
             set
             {
-                _isVisibile = value;
-                OnPropertyChanged(nameof(IsVisibile));
+                _isVisible = value;
+                OnPropertyChanged(nameof(IsVisible));
             }
         }
 
@@ -149,10 +149,10 @@ namespace WPF_BlackJack.Presentation
             _dealer.HiddenCardTotal = dCardValue1 + dCardValue2;
             _gameBoard.currentGameState = GameBoard.GameState.PlayerBet;
             _canClick = _gameBoard.Clickable();
-            _isVisibile = false;
+            _isVisible = false;
             _messages = "Player Bet";
             OnPropertyChanged(nameof(CanClick));
-            OnPropertyChanged(nameof(IsVisibile));
+            OnPropertyChanged(nameof(IsVisible));
 
 
         }
@@ -417,12 +417,12 @@ namespace WPF_BlackJack.Presentation
                 _player.BankRoll += _player.TotalWinnings;
             }
 
-           _isVisibile = _gameBoard.Visible();
+           IsVisible  = _gameBoard.Visible();
 
             OnPropertyChanged(nameof(Dealer));
             OnPropertyChanged(nameof(Player));
             OnPropertyChanged(nameof(Messages));
-            OnPropertyChanged(nameof(IsVisibile));
+            OnPropertyChanged(nameof(IsVisible));
         }
 
         public void Stand() 
