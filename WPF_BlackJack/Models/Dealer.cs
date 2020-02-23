@@ -4,7 +4,17 @@ namespace WPF_BlackJack.Models
 {
     public class Dealer : ObservableObject
     {
+        #region BackingFields
+
         private string _name;
+        private int? _cardTotal;
+        private List<string> _card;
+        private string _hiddenCard;
+        private int _hiddenCardTotal;
+
+        #endregion
+
+        #region Properties
 
         public string Name
         {
@@ -16,8 +26,6 @@ namespace WPF_BlackJack.Models
             }
         }
 
-        private int? _cardTotal;
-
         public int? CardTotal
         {
             get => _cardTotal;
@@ -28,21 +36,17 @@ namespace WPF_BlackJack.Models
             }
         }
 
-        private List<string> _card;
-
         public List<string> Card
         {
             get => _card;
-            set 
+            set
             {
                 _card = value;
                 OnPropertyChanged(nameof(Card));
             }
         }
 
-        private string _hiddenCard;
-
-        public string HiddenCard 
+        public string HiddenCard
         {
             get => _hiddenCard;
             set
@@ -51,8 +55,6 @@ namespace WPF_BlackJack.Models
                 OnPropertyChanged(nameof(Player));
             }
         }
-
-        private int _hiddenCardTotal;
 
         public int HiddenCardTotal
         {
@@ -64,12 +66,15 @@ namespace WPF_BlackJack.Models
             }
         }
 
+        #endregion
+
+        #region Constructor
         public Dealer(string name)
         {
             _name = name;
             this.Card = new List<string>();
         }
 
-
+        #endregion
     }
 }

@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WPF_BlackJack.Presentation;
 
 namespace WPF_BlackJack
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameView.xaml
     /// </summary>
     public partial class GameView: Window
     {
+        #region Constructor
+
         GameViewModel _gameViewModel;
+
         public GameView(GameViewModel gameViewModel)
         {
             _gameViewModel = gameViewModel;
             InitializeComponent();
         }
+
+        #endregion
+
+        #region ButtonClickEvents
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
@@ -34,7 +29,7 @@ namespace WPF_BlackJack
             blackJackRules.Show();
         }
 
-        private void ExitButton_Click(object sender, RoutedEventArgs e) 
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             _gameViewModel.GameCommand(Quit.Name);
             Application.Current.Shutdown();
@@ -55,7 +50,7 @@ namespace WPF_BlackJack
             _gameViewModel.PlayerStand();
         }
 
-        private void BetButton_Click(object sender, RoutedEventArgs e) 
+        private void BetButton_Click(object sender, RoutedEventArgs e)
         {
             Button BetButton = sender as Button;
             switch (BetButton.Name)
@@ -104,5 +99,7 @@ namespace WPF_BlackJack
             Button ActionButton = sender as Button;
             _gameViewModel.ActionButtonCommand(ActionButton.Name);
         }
+
+        #endregion
     }
 }

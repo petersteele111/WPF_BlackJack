@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WPF_BlackJack.Presentation;
 
 namespace WPF_BlackJack.Models
 {
     public class GameBoard : ObservableObject
     {
-
+        #region Enums
         public enum GameState
         {
             PlayerBet,
@@ -28,7 +25,9 @@ namespace WPF_BlackJack.Models
             NewRound
         };
 
-        public GameState currentGameState { get; set; }
+        #endregion
+
+        #region CardLogic
 
         List<string> cards = new List<string>()
         {
@@ -39,7 +38,7 @@ namespace WPF_BlackJack.Models
         private const int INITIALDEAL = 2;
 
 
-        public (List<string> dCards, List<string> pCards) DealInitalCards() 
+        public (List<string> dCards, List<string> pCards) DealInitalCards()
         {
             List<string> dealerCards = new List<string>();
             List<string> playerCards = new List<string>();
@@ -67,7 +66,7 @@ namespace WPF_BlackJack.Models
             return (playerCards, dealerCards);
         }
 
-        public string DealCard() 
+        public string DealCard()
         {
             reshuffleCards();
             Random random = new Random();
@@ -78,7 +77,7 @@ namespace WPF_BlackJack.Models
             return dealtCard;
         }
 
-        private void reshuffleCards() 
+        private void reshuffleCards()
         {
             if (cards.Count <= 4)
             {
@@ -91,7 +90,12 @@ namespace WPF_BlackJack.Models
             }
         }
 
-        public bool Clickable() 
+        #endregion
+
+        #region GameStateLogic
+
+        public GameState currentGameState { get; set; }
+        public bool Clickable()
         {
             if (currentGameState == GameState.PlayerStand || currentGameState == GameState.PlayerBust || currentGameState == GameState.PlayerBlackJack)
             {
@@ -118,5 +122,7 @@ namespace WPF_BlackJack.Models
                 return false;
             }
         }
+
+    #endregion
     }
 }

@@ -15,7 +15,19 @@ namespace WPF_BlackJack.Business
             Quit,
             QuitSave
         }
-        
+
+        private string _userName;
+
+        public string UserName
+        {
+            get => _userName;
+            set 
+            {
+                _userName = value; 
+            }
+        }
+
+
         List<Player> _allPlayers;
 
         Player _player;
@@ -25,7 +37,7 @@ namespace WPF_BlackJack.Business
         public GameBusiness()
         {
             InitializeDataService();
-            InitializeGame();
+            //InitializeGame();
         }
 
         private void InitializeDataService()
@@ -33,31 +45,26 @@ namespace WPF_BlackJack.Business
             _dataService = new DataServiceJson();
         }
 
-        private void InitializeGame() 
-        {
-            _allPlayers = _dataService.ReadAll();
-
-            _player = _allPlayers.FirstOrDefault(p => p.Name == "Peter");
-        }
-
         public List<Player> GetAllPlayers() 
         {
             return _dataService.ReadAll();
         }
 
-        public void SaveAllPlayers() 
+        public void SavePlayer(List<Player> player, string userName) 
         {
-            _dataService.WriteAll(_allPlayers);
+            _dataService.WriteAll(player);
+            _userName = userName;
         }
 
-        public Player GetCurrentPlayers() 
+        public Player GetPlayer(string userName)
         {
-            _player = _allPlayers.FirstOrDefault(p => p.Name == "Peter");
-            Player currentPlayers = _player;
-
-
-            return currentPlayers;
+            _allPlayers = GetAllPlayers();
+            _player = _allPlayers.FirstOrDefault(p => p.Name == userName);
+            _userName = userName;
+            return _player;
         }
+
+
     }
 
 }

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WPF_BlackJack.Presentation
 {
     /// <summary>
-    /// Interaction logic for BlackJackRules.xaml
+    /// Interaction logic for GameOver.xaml
     /// </summary>
-    public partial class BlackJackRules : Window
+    public partial class GameOver : Window
     {
-        public BlackJackRules()
+        public GameOver()
         {
             InitializeComponent();
         }

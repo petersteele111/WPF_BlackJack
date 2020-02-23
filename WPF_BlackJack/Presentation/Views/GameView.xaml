@@ -3,15 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_BlackJack"
-        xmlns:presentation="clr-namespace:WPF_BlackJack.Presentation"
         mc:Ignorable="d"
         Title="BlackJack" Height="1000" Width="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
 
     <Grid>
-        <Grid Background="DarkSlateGray">
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="../Images/GameBoard/GameBackground.png" />
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -34,7 +35,7 @@
                 <TextBox AcceptsReturn="True" />
             </DockPanel>
 
-            <Image Source="Images/GameBoard/BlackJackTable.png" Stretch="Fill" Grid.Column="0" Grid.Row="0"/>
+            <Image Source="../Images/GameBoard/BlackJackTable.png" Stretch="Fill" Grid.Column="0" Grid.Row="0"/>
 
             <!-- Canvas Layout for GameBoard-->
             <Grid Grid.Column="0" Grid.Row="0">

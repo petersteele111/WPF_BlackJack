@@ -65,11 +65,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Presentation\BlackJackRules.xaml">
+    <Page Include="Presentation\Views\BlackJackRules.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\GameView.xaml">
+    <Page Include="Presentation\Views\GameOver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\GameView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,18 +86,36 @@
     <Compile Include="Data\IDataService.cs" />
     <Compile Include="Models\Dealer.cs" />
     <Compile Include="Models\GameBoard.cs" />
-    <Compile Include="Presentation\BlackJackRules.xaml.cs">
+    <Compile Include="Presentation\Views\BlackJackRules.xaml.cs">
       <DependentUpon>BlackJackRules.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\GameViewModel.cs" />
+    <Compile Include="Presentation\Views\GameOver.xaml.cs">
+      <DependentUpon>GameOver.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ViewModels\GameViewModel.cs" />
     <Compile Include="Presentation\ObservableObject.cs" />
     <Compile Include="Models\Player.cs" />
-    <Compile Include="Presentation\GameView.xaml.cs">
+    <Compile Include="Presentation\Views\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Presentation\Views\RegisterPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\StartingScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presentation\Views\RegisterPlayer.xaml.cs">
+      <DependentUpon>RegisterPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ViewModels\RegisterViewModel.cs" />
+    <Compile Include="Presentation\Views\StartingScreen.xaml.cs">
+      <DependentUpon>StartingScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -224,6 +246,27 @@
     <Resource Include="Presentation\Images\Chips\25ChipDisabled.png" />
     <Resource Include="Presentation\Images\Chips\50ChipDisabled.png" />
     <Resource Include="Presentation\Images\Chips\5ChipDisabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Presentation\Images\OpeningScreen\BlackJackOpeningScreenBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Presentation\Images\OpeningScreen\PlayButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Presentation\Images\OpeningScreen\PlayButtonHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Presentation\Images\Register-LoginScreen\LoginButton.png" />
+    <Resource Include="Presentation\Images\Register-LoginScreen\LoginButtonHover.png" />
+    <Resource Include="Presentation\Images\Register-LoginScreen\RegisterButton.png" />
+    <Resource Include="Presentation\Images\Register-LoginScreen\RegisterButtonHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Presentation\Images\GameBoard\GameBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Presentation\Images\GameOverScreen\GameOverScreen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

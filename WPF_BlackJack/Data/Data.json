@@ -1,9 +1,6 @@
 ﻿[
   {
-    "Name": "Peter",
-    "BankRoll": 1000,
-    "TotalBet": 0,
-    "TotalWinnings": 0,
-    "BetAmount": 0
+    "Name": "Default",
+    "BankRoll": 1000
   }
 ]

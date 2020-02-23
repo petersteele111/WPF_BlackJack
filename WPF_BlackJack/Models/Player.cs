@@ -7,6 +7,8 @@ namespace WPF_BlackJack.Models
     [Serializable]
     public class Player : ObservableObject
     {
+        #region BackingFields
+
         private string _name;
         private int _bankRoll;
         private int _totalBet;
@@ -15,6 +17,9 @@ namespace WPF_BlackJack.Models
         private List<string> _card;
         private int _betAmount;
 
+        #endregion
+
+        #region Properties
         public string Name
         {
             get => _name;
@@ -34,7 +39,8 @@ namespace WPF_BlackJack.Models
                 OnPropertyChanged(nameof(BankRoll));
             }
         }
-
+        
+        [JsonIgnore]
         public int TotalBet
         {
             get => _totalBet;
@@ -44,7 +50,8 @@ namespace WPF_BlackJack.Models
                 OnPropertyChanged(nameof(TotalBet));
             }
         }
-
+        
+        [JsonIgnore]
         public int TotalWinnings
         {
             get => _totalWinnings;
@@ -79,18 +86,20 @@ namespace WPF_BlackJack.Models
         }
 
         [JsonIgnore]
-        public int BetAmount 
-        { 
+        public int BetAmount
+        {
             get => _betAmount;
-            set 
+            set
             {
                 _betAmount = value;
                 OnPropertyChanged(nameof(BetAmount));
-            }      
+            }
         }
 
+        #endregion
 
-        public Player(string name, int bankroll, int totalbet, int totalwin, int betAmount)
+        #region Constructor
+        public Player(string name, int bankroll, int totalbet = 0, int totalwin = 0, int betAmount = 0)
         {
             _name = name;
             _bankRoll = bankroll;
@@ -99,5 +108,7 @@ namespace WPF_BlackJack.Models
             _betAmount = betAmount;
             this.Card = new List<string>();
         }
+
+        #endregion
     }
 }
