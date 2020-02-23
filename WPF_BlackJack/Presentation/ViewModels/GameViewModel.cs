@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Media;
 using WPF_BlackJack.Business;
 using WPF_BlackJack.Models;
 
@@ -102,6 +104,10 @@ namespace WPF_BlackJack.Presentation
         #region Start Game
         public GameViewModel(GameBusiness gameBusiness)
         {
+            SoundPlayer soundPlayer = new SoundPlayer();
+            soundPlayer.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\Presentation\\Sounds\\BackgroundMusic\\BackgroundMusic.wav";
+            soundPlayer.PlayLooping();
+
             _gameBusiness = gameBusiness;
             _gameBoard = new GameBoard();
 
@@ -113,7 +119,7 @@ namespace WPF_BlackJack.Presentation
             _currentPlayer = _gameBusiness.GetPlayer(_gameBusiness.UserName);
 
             _player = _currentPlayer;
-            _dealer = new Dealer("Mark");
+            _dealer = new Dealer("mark");
 
             _gameBoard.currentGameState = GameBoard.GameState.PlayerBet;
             _canBet = true;
@@ -387,9 +393,9 @@ namespace WPF_BlackJack.Presentation
                 _dealer.Card.Add("../Images/Cards/" + dCard + ".bmp");
                 CheckDealerWinCondition();
             }
-            CheckGameWinCondition();
             OnPropertyChanged(nameof(Dealer));
             OnPropertyChanged(nameof(Player));
+            CheckGameWinCondition();
 
         }
 
@@ -442,7 +448,7 @@ namespace WPF_BlackJack.Presentation
                 _gameBoard.currentGameState = GameBoard.GameState.PlayerBlackJack;
                 _messages = "Player BlackJack";
                 _player.TotalWinnings = _player.TotalBet * 2;
-                _player.BankRoll = _player.TotalWinnings;
+                _player.BankRoll += _player.TotalWinnings;
 
                 _isVisible = _gameBoard.Visible();
 
@@ -561,6 +567,10 @@ namespace WPF_BlackJack.Presentation
                     break;
                 case "Quit":
                     break;
+                case "Help":
+                    BlackJackRules blackJackRules = new BlackJackRules();
+                    blackJackRules.ShowDialog();
+                    break;
                 default:
                     break;
             }
@@ -605,7 +615,7 @@ namespace WPF_BlackJack.Presentation
         public void GameOver()
         {
             GameOver gameOver = new GameOver();
-            gameOver.Show();
+            gameOver.ShowDialog();
         }
 
         #endregion

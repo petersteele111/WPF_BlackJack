@@ -46,7 +46,7 @@ namespace WPF_BlackJack.Presentation
             }
             else
             {
-                _currentPlayer = new Player(userName, 1000);
+                _currentPlayer = new Player(userName.ToLower(), 1000);
                 _player.Add(_currentPlayer);
                 _gameBusiness = new GameBusiness();
                 _gameBusiness.SavePlayer(_player, userName);
@@ -69,7 +69,7 @@ namespace WPF_BlackJack.Presentation
             {
                 _messages = null;
                 _gameBusiness = new GameBusiness();
-                _currentPlayer = _gameBusiness.GetPlayer(userName);
+                _currentPlayer = _gameBusiness.GetPlayer(userName.ToLower());
                 if (_currentPlayer == null)
                 {
                     _messages = "Could Not Find Player. Have You Registered?";

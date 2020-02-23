@@ -25,8 +25,7 @@ namespace WPF_BlackJack
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            BlackJackRules blackJackRules = new BlackJackRules();
-            blackJackRules.Show();
+            _gameViewModel.GameCommand(Help.Name);
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)

@@ -9,8 +9,8 @@
     <Window.DataContext>
         <local:RegisterViewModel />
     </Window.DataContext>
-    
-    <Grid>
+
+    <Grid FocusManager.FocusedElement="{Binding ElementName=UserName}">
         <Image Source="../Images/OpeningScreen/BlackJackOpeningScreenBackground.png" />
         <Grid>
             <Grid.ColumnDefinitions>

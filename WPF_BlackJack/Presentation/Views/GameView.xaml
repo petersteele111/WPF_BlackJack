@@ -29,7 +29,7 @@
                         <MenuItem Header="_Quit" Name="Quit" Click="ExitButton_Click"/>
                     </MenuItem>
                     <MenuItem Header="_Help">
-                        <MenuItem Header="_Rules" Click="HelpButton_Click"/>
+                        <MenuItem Header="_Rules" Name="Help" Click="HelpButton_Click"/>
                     </MenuItem>
                 </Menu>
                 <TextBox AcceptsReturn="True" />
@@ -149,8 +149,8 @@
                 <!-- Bet Modifier -->
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30, 0, 0, 0">
                     <Label Content="Bet Modifier: " FontSize="24" Foreground="Red" FontWeight="Bold" />
-                    <Button Content="-" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" Name="BetDecrease" Click="BetModifier_Click" IsEnabled="{Binding CanBet}"></Button>
-                    <Button Content="+" FontSize="24" Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Name="BetIncrease" Click="BetModifier_Click" IsEnabled="{Binding CanBet}"></Button>
+                    <Button Name="BetDecrease" Click="BetModifier_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource ChangeBMDButton}"/>
+                    <Button Name="BetIncrease" Click="BetModifier_Click" IsEnabled="{Binding CanBet}" Style="{StaticResource ChangeBMIButton}"/>
                 </StackPanel>
 
                 <!-- Total Win -->
@@ -178,15 +178,15 @@
             <!-- Actions -->
             <Canvas>
                 <Label Content="Actions" Foreground="White" FontSize="36" Canvas.Left="440" Canvas.Top="660"></Label>
-                <StackPanel Canvas.Left="420" Canvas.Top="730" Orientation="Vertical">
+                <StackPanel Canvas.Left="370" Canvas.Top="730" Orientation="Vertical">
 
                     <StackPanel Orientation="Horizontal">
-                        <Button IsEnabled="{Binding CanClick}" Content="Hit" FontSize="24" Width="80" Height="80" Margin="5" Click="HitButton_Click"></Button>
-                        <Button IsEnabled="{Binding CanClick}" Content="Stand" FontSize="24" Width="80" Height="80" Click="StandButton_Click"></Button>
+                        <Button IsEnabled="{Binding CanClick}" Click="HitButton_Click" Style="{StaticResource ChangeHitButton}"/>
+                        <Button IsEnabled="{Binding CanClick}" Click="StandButton_Click" Style="{StaticResource ChangeStandButton}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Next &#xa;Round" FontSize="24" Width="80" Margin="5" Height="80" Click="ActionButton_Click" Name="NextRound" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}" />
-                        <Button Content="Deal" FontSize="24" Width="80" Height="80" Margin="5" Click="ActionButton_Click" Name="Deal" Visibility="{Binding IsDealVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}" />
+                        <Button Click="ActionButton_Click" Name="NextRound" Style="{StaticResource ChangeNewRoundButton}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVis}, FallbackValue=Hidden}" />
+                        <Button Click="ActionButton_Click" Name="Deal" Style="{StaticResource ChangeDealButton}" Visibility="{Binding IsDealVisible, Converter={StaticResource BoolToVis}, FallbackValue=Visible}" />
                     </StackPanel>
                 </StackPanel>
             </Canvas>
