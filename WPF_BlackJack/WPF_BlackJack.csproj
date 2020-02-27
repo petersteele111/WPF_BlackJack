@@ -65,7 +65,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Presentation\Views\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Presentation\Views\BlackJackRules.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Views\GameObjective.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -86,8 +94,14 @@
     <Compile Include="Data\IDataService.cs" />
     <Compile Include="Models\Dealer.cs" />
     <Compile Include="Models\GameBoard.cs" />
+    <Compile Include="Presentation\Views\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Views\BlackJackRules.xaml.cs">
       <DependentUpon>BlackJackRules.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Views\GameObjective.xaml.cs">
+      <DependentUpon>GameObjective.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Views\GameOver.xaml.cs">
       <DependentUpon>GameOver.xaml</DependentUpon>
@@ -263,9 +277,6 @@
     <Resource Include="Presentation\Images\Register-LoginScreen\RegisterButtonHover.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Presentation\Images\GameBoard\GameBackground.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Presentation\Images\GameOverScreen\GameOverScreen.png" />
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +290,12 @@
     <Resource Include="Presentation\Images\GameBoard\StandButtonHover.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Presentation\Images\ObjectiveScreen\BlackJackObjectiveBackground.png" />
+    <Resource Include="Presentation\Images\AboutScreen\BlackJackAboutScreenBackground.png" />
+    <Resource Include="Presentation\Images\GameBoard\CloseButton.png" />
+    <Resource Include="Presentation\Images\GameBoard\CloseButtonHover.png" />
+    <Resource Include="Presentation\Images\GameBoard\BlackJackRulesBackground.png" />
+    <Resource Include="Presentation\Images\GameBoard\GameBoardBackground.png" />
     <Resource Include="Presentation\Images\GameBoard\BetModifierDecreaseButton.png" />
     <Resource Include="Presentation\Images\GameBoard\BetModifierDecreaseButtonDisabled.png" />
     <Resource Include="Presentation\Images\GameBoard\BetModifierDecreaseButtonHover.png" />

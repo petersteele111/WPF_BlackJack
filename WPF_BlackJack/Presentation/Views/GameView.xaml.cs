@@ -28,6 +28,16 @@ namespace WPF_BlackJack
             _gameViewModel.GameCommand(Help.Name);
         }
 
+        private void ObjectiveButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameViewModel.GameCommand(Objective.Name);
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameViewModel.GameCommand(About.Name);
+        }
+
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             _gameViewModel.GameCommand(Quit.Name);

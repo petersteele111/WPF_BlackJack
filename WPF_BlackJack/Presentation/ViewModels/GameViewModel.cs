@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Media;
 using WPF_BlackJack.Business;
 using WPF_BlackJack.Models;
+using WPF_BlackJack.Presentation.Views;
 
 namespace WPF_BlackJack.Presentation
 {
@@ -209,6 +210,8 @@ namespace WPF_BlackJack.Presentation
 
         public void SaveData()
         {
+            _player.BankRoll += _player.TotalBet;
+            _player.TotalBet = 0;
             _playerData.Add(_player);
             _gameBusiness.SavePlayer(_playerData, _player.Name);
             _playerData.Clear();
@@ -253,9 +256,15 @@ namespace WPF_BlackJack.Presentation
         #region BettingLogic
         public void CheckBankRoll(int bet, int bankRoll)
         {
-            if (bankRoll > 0)
+            if (bankRoll > 0 && bankRoll - bet > 0)
             {
                 _player.BetAmount = bet;
+                _player.TotalBet += bet;
+                _player.BankRoll -= bet;
+            }
+            else
+            {
+                bet = bankRoll;
                 _player.TotalBet += bet;
                 _player.BankRoll -= bet;
             }
@@ -449,6 +458,7 @@ namespace WPF_BlackJack.Presentation
                 _messages = "Player BlackJack";
                 _player.TotalWinnings = _player.TotalBet * 2;
                 _player.BankRoll += _player.TotalWinnings;
+                _player.TotalBet = 0;
 
                 _isVisible = _gameBoard.Visible();
 
@@ -468,6 +478,8 @@ namespace WPF_BlackJack.Presentation
             _messages = "Player Bust";
             _canClick = _gameBoard.Clickable();
             _isVisible = _gameBoard.Visible();
+            _player.TotalWinnings = 0;
+            _player.TotalBet = 0;
             SaveData();
 
             OnPropertyChanged(nameof(IsVisible));
@@ -481,6 +493,7 @@ namespace WPF_BlackJack.Presentation
             _messages = "Dealer Bust";
             _player.TotalWinnings = _player.TotalBet * 2;
             _player.BankRoll += _player.TotalWinnings;
+            _player.TotalBet = 0;
             SaveData();
         }
 
@@ -489,6 +502,7 @@ namespace WPF_BlackJack.Presentation
             _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
             _messages = "Dealer BlackJack";
             _player.TotalWinnings = 0;
+            _player.TotalBet = 0;
             SaveData();
         }
 
@@ -497,6 +511,7 @@ namespace WPF_BlackJack.Presentation
             _gameBoard.currentGameState = GameBoard.GameState.RoundOver;
             _messages = "Dealer Won";
             _player.TotalWinnings = 0;
+            _player.TotalBet = 0;
             SaveData();
         }
 
@@ -506,6 +521,7 @@ namespace WPF_BlackJack.Presentation
             _messages = "Player Won";
             _player.TotalWinnings = _player.TotalBet * 2;
             _player.BankRoll += _player.TotalWinnings;
+            _player.TotalBet = 0;
             SaveData();
         }
 
@@ -515,6 +531,7 @@ namespace WPF_BlackJack.Presentation
             _messages = "Draw";
             _player.TotalWinnings = _player.TotalBet;
             _player.BankRoll += _player.TotalWinnings;
+            _player.TotalBet = 0;
             SaveData();
         }
 
@@ -566,10 +583,19 @@ namespace WPF_BlackJack.Presentation
                     NewGame();
                     break;
                 case "Quit":
+                    SaveData();
                     break;
                 case "Help":
                     BlackJackRules blackJackRules = new BlackJackRules();
                     blackJackRules.ShowDialog();
+                    break;
+                case "Objective":
+                    GameObjective gameObjective = new GameObjective();
+                    gameObjective.ShowDialog();
+                    break;
+                case "About":
+                    About about = new About();
+                    about.ShowDialog();
                     break;
                 default:
                     break;

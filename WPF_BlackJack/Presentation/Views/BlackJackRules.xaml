@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_BlackJack.Presentation"
         mc:Ignorable="d"
-        Title="BlackJackRules" Height="550" Width="800" WindowStartupLocation="CenterScreen">
+        Title="BlackJackRules" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <Grid Background="DarkSlateGray">
+        <Image Source="../Images/GameBoard/BlackJackRulesBackground.png" Stretch="Fill"/>
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -17,35 +18,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Content="BlackJack Rules" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Foreground="LightGreen"/>
+            <Button Grid.Column="0" Grid.Row="2" Click="Button_Click" Style="{StaticResource ChangeCloseButton}" Margin="560,0,32,0"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" FontSize="17" Padding="5" Foreground="White">
-                Below you will find the definition of common terms and the rules to play BlackJack.
-                <LineBreak/>
-                <LineBreak/>
-                <Bold Foreground="LightGreen">Hit</Bold> = Have the dealer deal you a new card.
-                <LineBreak/>
-                <Bold Foreground="LightGreen">Stand</Bold> = Stop having cards dealt to you, and stay with your current total
-                <LineBreak/>
-                <Bold Foreground="LightGreen">Bust</Bold> = You have exceeded 21 and have busted (Loss)
-                <LineBreak/>
-                <LineBreak/>
-                <Bold Foreground="LightGreen">Objective:</Bold>
-                <LineBreak/>
-                The Objective of BlackJack is to reach a card total of 21. You are dealt 2 cards initially. The face value
-                <LineBreak/>
-                of the cards is what the total is. Ace can be either a 1 or 11 depending on what you need. All royal cards
-                <LineBreak/>
-                Are a value of 10. The dealer will be dealt one card face up, and one card face down. The dealer must
-                <LineBreak/>
-                stand on all values over 17 and hit on all values 16 and under. Whoever has the highest total
-                <LineBreak/>
-                at the end wins the round and the bet.
-            </TextBlock>
 
-            <Button Grid.Column="0" Grid.Row="2" Width="100" Height="50" Content="Close" FontSize="30" HorizontalAlignment="Right" Margin="10" Click="Button_Click">
-                
-            </Button>
 
         </Grid>
     </Grid>
